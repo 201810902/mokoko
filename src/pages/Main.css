@@ -1,0 +1,68 @@
+Main {
+    background-color: black;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.Login {
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+}
+
+.LoginForm {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.SignUp,
+.findId {
+    background: none;
+    border-style: none;
+}
+
+.SignUp:hover,
+.findId:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.Banner {
+    
+}
+
+.openLink {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.kakaotalkLink {
+    margin-bottom: 5px;
+    border-style: none;
+    cursor: pointer;
+
+
+}
+
+.kakaotalkLink:hover {
+    border-style: outset;
+    border-radius: 5px;
+    border-color: rgb(247, 221, 0);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.discordLink {
+    border-style: none;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23)
+}
+
+.discordLink:hover {
+    border-style: outset;
+    border-radius: 5px;
+    border-color: rgb(136, 164, 243);
+}
