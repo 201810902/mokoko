@@ -1,68 +1,158 @@
-Main {
-    background-color: black;
+.container {
+    display: grid;
+    grid-template-areas:
+        "header  main    main"
+        "   a    main    main"
+        "   b   footer  footer";
+    margin-left: 50px;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-.Login {
-    display: flex;
-    flex-direction: row;
-    padding: 5px;
-}
-
-.LoginForm {
-    width: fit-content;
-    display: flex;
-    flex-direction: column;
-}
-
-.SignUp,
-.findId {
-    background: none;
+.navButton {
     border-style: none;
+    cursor: pointer;
+    font-size: medium;
 }
 
-.SignUp:hover,
-.findId:hover {
-    cursor: pointer;
-    text-decoration: underline;
+.header {
+    grid-area: header;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mainLogo {
+    display: flex;
+}
+
+.jamoLogo {
+    width: 30px;
 }
 
 .Banner {
-    
+    grid-area: main;
 }
 
+
 .openLink {
-    width: fit-content;
-    display: flex;
-    flex-direction: column;
+    margin: 10px;
 }
 
 .kakaotalkLink {
+    width: 60px;
+    height: 50px;
     margin-bottom: 5px;
     border-style: none;
     cursor: pointer;
-
-
+    background-image: url(/src/assets/kakaotalkLogo.svg);
+    background-repeat: no-repeat;
+    padding-left: 40px;
+    font-size: medium;
+    font-weight: 600;
 }
 
 .kakaotalkLink:hover {
-    border-style: outset;
+    background-color: rgb(243, 221, 20);
     border-radius: 5px;
-    border-color: rgb(247, 221, 0);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 
 .discordLink {
     border-style: none;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23)
+    width: 60px;
+    height: 50px;
+    margin-bottom: 5px;
+    border-style: none;
+    cursor: pointer;
+    background-image: url(/src/assets/discordLogo.svg);
+    background-repeat: no-repeat;
+    /* background-position: 10px 2px; */
+    padding-left: 40px;
+    /* font-size: medium;
+    font-weight: 600; */
+
 }
 
 .discordLink:hover {
-    border-style: outset;
+    background-color: rgb(182, 200, 250);
     border-radius: 5px;
-    border-color: rgb(136, 164, 243);
+
+}
+
+.birthDay {
+    grid-area: b;
+    background-color: pink;
+    height: 100px;
+    width: 250px;
+    border-radius: 5px;
+}
+
+
+
+.birthdayList {
+    background-color: white;
+    width: 200px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+}
+
+.footer {
+    background-color: pink;
+    margin-top: 30px;
+    height: 12.5rem;
+    grid-area: footer;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.board {
+    background-color: yellow;
+    width: 200px;
+}
+
+/* 이하는 스와이퍼 부분 css */
+
+#app {
+    height: 100%;
+}
+
+html,
+body {
+    position: relative;
+    height: 100%;
+}
+
+body {
+    background: #eee;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: #000;
+    margin: 0;
+    padding: 0;
+}
+
+.swiper {
+    max-width: 1024px;
+    max-height: 500px;
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+
+    /* Center slide text vertically */
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }

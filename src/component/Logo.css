@@ -1,0 +1,10 @@
+.Logo_Button {
+    border-style: none;
+    font-size: x-large;
+    font-weight: 900;
+    width: fit-content
+}
+
+.Logo_Button:hover {
+    cursor: pointer;
+}
