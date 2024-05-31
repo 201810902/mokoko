@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Main from "./pages/Main";
+import Community from "./pages/Community";
+import Login from "./pages/Login";
 import "./App.css";
 
 function App() {
@@ -8,9 +10,11 @@ function App() {
 
   return (
     <>
-      <div className="App">
-        <Main />
-      </div>
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/community" element={<Community />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
     </>
   );
 }
