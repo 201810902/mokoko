@@ -1,5 +1,6 @@
 .container {
     display: grid;
+    padding: 30px;
     grid-template-areas:
         "header  main    main"
         "   a    main    main"
@@ -15,10 +16,11 @@
 
 .header {
     grid-area: header;
-
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
+    padding: 30px;
 }
 
 .mainLogo {
