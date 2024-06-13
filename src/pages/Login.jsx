@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { login } from "../redux/user";
 import "./Login.css";
 import Logo from "./../component/Logo";
+
+import Loading from "../component/Loding";
+
 const Login = () => {
   const [input, setInput] = useState("");
   const [userInputData, setUserInputData] = useState({ id: "", password: "" });
@@ -58,7 +61,7 @@ const Login = () => {
   };
   return (
     <>
-      <div className="box">
+      <div className="box">   
         <div className="loginSection">
           <Logo />
           <div className="loginForm">
