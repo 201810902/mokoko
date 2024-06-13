@@ -38,11 +38,12 @@
 
 .openLink {
     margin: 10px;
+    display: flex;
 }
 
 .kakaotalkLink {
     width: 60px;
-    height: 50px;
+    height: 100px;
     margin-bottom: 5px;
     border-style: none;
     cursor: pointer;

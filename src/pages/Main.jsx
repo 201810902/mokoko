@@ -39,14 +39,14 @@ const Main = () => {
           <button className="navButton" onClick={onClickLogin}>
             로그인
           </button>
-
-          <div className="openLink">
-            <button className="kakaotalkLink" onClick={openTalk}>
-              {/* <img src={kakaotalkLogo} /> */}
-            </button>
-            <button className="discordLink" onClick={openDiscord}></button>
-          </div>
         </div>
+        <div className="openLink">
+          <button className="kakaotalkLink" onClick={openTalk}>
+            자라나는 모코코 오픈카톡
+          </button>
+          <button className="discordLink" onClick={openDiscord}></button>
+        </div>
+        <input placeholder="캐릭터 명을 입력하세요" />
 
         <div className="Banner">
           {/* <img src={banner1} /> */}
@@ -86,10 +86,10 @@ const Main = () => {
           <div className="board">썸네일</div>
           <div className="board">썸네일</div>{" "}
         </div>
-        <div className="birthDay">
+        {/* <div className="birthDay">
           <h3>이달의 생일🎉</h3>
           <div className="birthdayList">생일축하해~</div>
-        </div>
+        </div> */}
       </div>
     </>
   );
