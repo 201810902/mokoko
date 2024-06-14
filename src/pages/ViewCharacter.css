@@ -1,0 +1,30 @@
+.header {
+    text-align: center;
+}
+
+.lost_wrap {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.lost_character {
+    display: flex;
+    flex: 1130%;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.characterCard {
+    width: 500px;
+    background-color: #fff;
+    border: 1px solid #e2e2e2;
+    margin: 10px;
+}
+
+.classinfo {
+    text-align: center;
+}

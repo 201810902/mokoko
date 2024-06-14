@@ -1,0 +1,226 @@
+[
+  {
+    "ServerName": "아만",
+    "CharacterName": "기홍련",
+    "CharacterLevel": 50,
+    "CharacterClassName": "기공사",
+    "ItemAvgLevel": "1,460.00",
+    "ItemMaxLevel": "1,460.00"
+  },
+  {
+    "ServerName": "아만",
+    "CharacterName": "얌홍련",
+    "CharacterLevel": 59,
+    "CharacterClassName": "소울이터",
+    "ItemAvgLevel": "1,500.00",
+    "ItemMaxLevel": "1,500.00"
+  },
+  {
+    "ServerName": "아만",
+    "CharacterName": "약초팔이소녀",
+    "CharacterLevel": 55,
+    "CharacterClassName": "리퍼",
+    "ItemAvgLevel": "1,325.00",
+    "ItemMaxLevel": "1,325.00"
+  },
+  {
+    "ServerName": "아만",
+    "CharacterName": "여우비양",
+    "CharacterLevel": 60,
+    "CharacterClassName": "기상술사",
+    "ItemAvgLevel": "1,523.33",
+    "ItemMaxLevel": "1,523.33"
+  },
+  {
+    "ServerName": "아만",
+    "CharacterName": "성수동고영희",
+    "CharacterLevel": 60,
+    "CharacterClassName": "건슬링어",
+    "ItemAvgLevel": "1,501.67",
+    "ItemMaxLevel": "1,501.67"
+  },
+  {
+    "ServerName": "아만",
+    "CharacterName": "도홍련",
+    "CharacterLevel": 60,
+    "CharacterClassName": "도화가",
+    "ItemAvgLevel": "1,551.67",
+    "ItemMaxLevel": "1,551.67"
+  },
+  {
+    "ServerName": "아만",
+    "CharacterName": "작바애오",
+    "CharacterLevel": 60,
+    "CharacterClassName": "바드",
+    "ItemAvgLevel": "1,541.67",
+    "ItemMaxLevel": "1,541.67"
+  },
+  {
+    "ServerName": "아만",
+    "CharacterName": "하민의봄",
+    "CharacterLevel": 60,
+    "CharacterClassName": "소서리스",
+    "ItemAvgLevel": "1,533.33",
+    "ItemMaxLevel": "1,533.33"
+  },
+  {
+    "ServerName": "아만",
+    "CharacterName": "민해성",
+    "CharacterLevel": 60,
+    "CharacterClassName": "호크아이",
+    "ItemAvgLevel": "1,475.00",
+    "ItemMaxLevel": "1,475.00"
+  },
+  {
+    "ServerName": "아만",
+    "CharacterName": "양홍련",
+    "CharacterLevel": 60,
+    "CharacterClassName": "바드",
+    "ItemAvgLevel": "1,599.17",
+    "ItemMaxLevel": "1,599.17"
+  },
+  {
+    "ServerName": "아만",
+    "CharacterName": "아만못잃어",
+    "CharacterLevel": 60,
+    "CharacterClassName": "블레이드",
+    "ItemAvgLevel": "1,450.00",
+    "ItemMaxLevel": "1,450.00"
+  },
+  {
+    "ServerName": "아만",
+    "CharacterName": "깅예림",
+    "CharacterLevel": 60,
+    "CharacterClassName": "서머너",
+    "ItemAvgLevel": "1,550.00",
+    "ItemMaxLevel": "1,550.00"
+  },
+  {
+    "ServerName": "니나브",
+    "CharacterName": "뱌나나나냥",
+    "CharacterLevel": 10,
+    "CharacterClassName": "서머너",
+    "ItemAvgLevel": "50.00",
+    "ItemMaxLevel": "50.00"
+  },
+  {
+    "ServerName": "니나브",
+    "CharacterName": "장화신은고양희",
+    "CharacterLevel": 1,
+    "CharacterClassName": "스페셜리스트",
+    "ItemAvgLevel": "0.00",
+    "ItemMaxLevel": "0.00"
+  },
+  {
+    "ServerName": "니나브",
+    "CharacterName": "롤로륑",
+    "CharacterLevel": 10,
+    "CharacterClassName": "건슬링어",
+    "ItemAvgLevel": "41.67",
+    "ItemMaxLevel": "50.00"
+  },
+  {
+    "ServerName": "니나브",
+    "CharacterName": "보라꿈나비",
+    "CharacterLevel": 10,
+    "CharacterClassName": "창술사",
+    "ItemAvgLevel": "50.00",
+    "ItemMaxLevel": "50.00"
+  },
+  {
+    "ServerName": "니나브",
+    "CharacterName": "타스마이",
+    "CharacterLevel": 50,
+    "CharacterClassName": "스카우터",
+    "ItemAvgLevel": "1,302.00",
+    "ItemMaxLevel": "1,302.00"
+  },
+  {
+    "ServerName": "실리안",
+    "CharacterName": "김홍련양",
+    "CharacterLevel": 1,
+    "CharacterClassName": "전사(여)",
+    "ItemAvgLevel": "0.00",
+    "ItemMaxLevel": "0.00"
+  },
+  {
+    "ServerName": "실리안",
+    "CharacterName": "앙버터의꿈",
+    "CharacterLevel": 10,
+    "CharacterClassName": "데빌헌터",
+    "ItemAvgLevel": "50.00",
+    "ItemMaxLevel": "50.00"
+  },
+  {
+    "ServerName": "실리안",
+    "CharacterName": "여우비냥",
+    "CharacterLevel": 1,
+    "CharacterClassName": "스페셜리스트",
+    "ItemAvgLevel": "0.00",
+    "ItemMaxLevel": "0.00"
+  },
+  {
+    "ServerName": "실리안",
+    "CharacterName": "양홐련",
+    "CharacterLevel": 1,
+    "CharacterClassName": "마법사",
+    "ItemAvgLevel": "0.00",
+    "ItemMaxLevel": "0.00"
+  },
+  {
+    "ServerName": "아브렐슈드",
+    "CharacterName": "구름얌냠",
+    "CharacterLevel": 50,
+    "CharacterClassName": "기상술사",
+    "ItemAvgLevel": "1,340.00",
+    "ItemMaxLevel": "1,340.00"
+  },
+  {
+    "ServerName": "아브렐슈드",
+    "CharacterName": "치즈냠얌",
+    "CharacterLevel": 10,
+    "CharacterClassName": "기상술사",
+    "ItemAvgLevel": "50.00",
+    "ItemMaxLevel": "50.00"
+  },
+  {
+    "ServerName": "아브렐슈드",
+    "CharacterName": "맹홍련",
+    "CharacterLevel": 50,
+    "CharacterClassName": "도화가",
+    "ItemAvgLevel": "1,340.00",
+    "ItemMaxLevel": "1,340.00"
+  },
+  {
+    "ServerName": "아브렐슈드",
+    "CharacterName": "회색고냥잉",
+    "CharacterLevel": 10,
+    "CharacterClassName": "아르카나",
+    "ItemAvgLevel": "50.00",
+    "ItemMaxLevel": "50.00"
+  },
+  {
+    "ServerName": "아브렐슈드",
+    "CharacterName": "장화신은고영히",
+    "CharacterLevel": 10,
+    "CharacterClassName": "기상술사",
+    "ItemAvgLevel": "50.00",
+    "ItemMaxLevel": "50.00"
+  },
+  {
+    "ServerName": "루페온",
+    "CharacterName": "12342343",
+    "CharacterLevel": 10,
+    "CharacterClassName": "기상술사",
+    "ItemAvgLevel": "50.00",
+    "ItemMaxLevel": "50.00"
+  },
+  {
+    "ServerName": "루페온",
+    "CharacterName": "기상이외변",
+    "CharacterLevel": 1,
+    "CharacterClassName": "스페셜리스트",
+    "ItemAvgLevel": "0.00",
+    "ItemMaxLevel": "0.00"
+  }
+]

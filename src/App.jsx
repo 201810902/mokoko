@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Mypage from "./pages/Mypage";
 import SignUp from "./pages/SignUp";
 import FindId from "./pages/FindId";
+import ViewCharacter from "./pages/ViewCharacter";
 import "./App.css";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="mypage" element={<Mypage />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="findid" element={<FindId />} />
+        <Route path="viewCharacter" element={<ViewCharacter />} />
       </Routes>
     </>
   );
