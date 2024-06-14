@@ -159,3 +159,33 @@ body {
     height: 100%;
     object-fit: cover;
 }
+
+/* 미디어 쿼리 - 태블릿 및 모바일 크기 */
+@media (max-width: 480px) {
+    .container {
+        padding: 20px;
+    }
+
+    .header {
+        padding: 10px;
+    }
+
+    .mainLogo {
+        justify-content: flex-start;
+    }
+
+    .birthDay {
+        width: 80%;
+        max-width: 300px;
+    }
+
+    .birthdayList {
+        width: 80%;
+        max-width: 160px;
+    }
+
+    .footer {
+        flex-direction: column;
+        height: auto;
+    }
+}

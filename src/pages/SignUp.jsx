@@ -1,7 +1,10 @@
+import { useState } from "react";
 import Logo from "../component/Logo";
 import "./SignUp.css";
 import mokoko from "../assets/Travel with MOKOKO.jpg";
 const SignUp = () => {
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
   
   return (
     <div className="signUp">
