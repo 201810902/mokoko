@@ -12,7 +12,7 @@ import Logo from "./../component/Logo";
 import jamoLogo from "./../assets/jamologo.svg";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Keyboard, Pagination, Navigation } from "swiper/modules";
-
+import Menu from "./../component/Menu";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -28,8 +28,11 @@ const Main = () => {
   const onClickLogin = () => {
     navigate("/login");
   };
+  const onClickboard = () => {
+    navigate("/community");
+  };
   return (
-    <>
+    <div className="home">
       <div className="container">
         <div className="header">
           <div className="mainLogo">
@@ -39,14 +42,20 @@ const Main = () => {
           <button className="navButton" onClick={onClickLogin}>
             로그인
           </button>
+
+          <div className="openLink">
+            <button className="kakaotalkLink" onClick={openTalk}>
+              카카오톡
+            </button>
+            <button className="discordLink" onClick={openDiscord}>
+              디스코드
+            </button>
+          </div>
         </div>
-        <div className="openLink">
-          <button className="kakaotalkLink" onClick={openTalk}>
-            자라나는 모코코 오픈카톡
-          </button>
-          <button className="discordLink" onClick={openDiscord}></button>
+        <Menu />
+        <div className="headerBar">
+          <input className="searchLoa" placeholder="캐릭터 명을 입력하세요" />
         </div>
-        <input placeholder="캐릭터 명을 입력하세요" />
 
         <div className="Banner">
           {/* <img src={banner1} /> */}
@@ -91,7 +100,7 @@ const Main = () => {
           <div className="birthdayList">생일축하해~</div>
         </div> */}
       </div>
-    </>
+    </div>
   );
 };
 export default Main;

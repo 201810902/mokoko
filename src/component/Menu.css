@@ -1,0 +1,9 @@
+.menuBar {
+    grid-area: a;
+    background-color: green;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 10rem;
+}
