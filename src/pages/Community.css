@@ -1,0 +1,22 @@
+.section {
+    display: flex;
+}
+
+.content {
+    width: 30rem;
+}
+
+.edit {
+    display: flex;
+    flex-direction: column;
+}
+
+.postList {
+    display: flex;
+    flex-direction: column;
+    width: 20rem;
+    background-color: lightgray;
+    min-height: 3rem;
+    justify-content: center;
+    align-items: top;
+}
