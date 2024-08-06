@@ -1,0 +1,13 @@
+.writingForm {
+    width: 80vh;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.selectWriteCategory {
+    margin-right: 10px;
+}
