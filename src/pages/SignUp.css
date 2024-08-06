@@ -1,0 +1,61 @@
+.signUp {
+    position: relative;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* background-color: white; */
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    /* box-shadow: rgba(56, 56, 56, 0.2) 0px 0px 29px 0px; */
+    padding: 0px 20px;
+
+}
+
+#root {
+    background-image: url("../assets/Travel with MOKOKO.jpg");
+    background-size: cover;
+}
+
+.formContainer {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.signupForm {
+    display: inline-flex;
+    border: none;
+    border-radius: 2px;
+    height: 50px;
+    width: 100%;
+    margin: 5px 0;
+    padding-left: 10px;
+    font-size: 14px;
+}
+
+.inputForm::placeholder {
+    color: gray;
+}
+
+.signupButton {
+    border: none;
+    background-color: rgb(185, 238, 131);
+    height: 50px;
+    width: 103%;
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+}
+
+.signupButton:hover {
+    background-color: rgb(169, 219, 118);
+    color: black;
+}
