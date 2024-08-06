@@ -34,12 +34,13 @@
     border-style: none;
     height: 50px;
     width: 400px;
-    margin: 3px;
+    margin: 4px;
+    padding-left: 10px;
 }
 
 .inputForm::placeholder {
     color: gray;
-    text-indent: 10px;
+    /* text-indent: 5px; */
 }
 
 .clickLogin,
@@ -102,4 +103,19 @@
 .FindId:hover {
     cursor: pointer;
     color: gray;
+}
+
+.autoLogin {
+    cursor: pointer;
+    background-color: rgb(233, 230, 230);
+    border-radius: 50%;
+    margin-right: 5px;
+    vertical-align: middle;
+
+}
+
+.isAutoLogin {
+    margin: 5px;
+    text-justify: center;
+    align-items: center;
 }
