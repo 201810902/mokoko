@@ -15,10 +15,11 @@ import jamoLogo from "./../assets/jamologo.svg";
 import DailyContent from "./../component/DailyContent";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Keyboard, Pagination, Navigation } from "swiper/modules";
-
+import Searcbar from "../component/SearchMyCharacter";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import SearchCharacter from "../component/SearchMyCharacter";
 
 const Main = () => {
   const [inputText, setInputText] = useState("");
@@ -53,10 +54,9 @@ const Main = () => {
             <button className="kakaotalkLink" onClick={openTalk}></button>
             <button className="discordLink" onClick={openDiscord}></button>
           </div>
-          <input placeholder="캐릭터 명을 입력하세요" onChange={handleInput} />
+          <SearchCharacter />
         </div>
 
-        {/* <div className="banner">배너배너</div> */}
         <div className="item banner">
           <Swiper
             slidesPerView="auto"

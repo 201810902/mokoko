@@ -10,8 +10,7 @@ const Logo = () => {
   };
   return (
     <>
-      <div className="Logo_Button" onClick={onClickLogo}>
-        
+      <div className="main_Logo Logo_Button" onClick={onClickLogo}>
         자라나는 모코코
       </div>
     </>

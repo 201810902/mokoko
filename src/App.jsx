@@ -7,7 +7,11 @@ import Mypage from "./pages/Mypage";
 import SignUp from "./pages/SignUp";
 import FindId from "./pages/FindId";
 import ViewCharacter from "./pages/ViewCharacter";
-import TestPage from "./pages/testpage";
+import Gallery from "./pages/Gallery";
+import Questions from "./pages/Questions";
+import Tactics from "./pages/Tactics";
+import Suggestion from "./pages/Suggestion";
+import Bragging from "./pages/Bragging";
 import Write from "./pages/Write";
 import "./App.css";
 
@@ -23,9 +27,13 @@ function App() {
         <Route path="mypage" element={<Mypage />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="findid" element={<FindId />} />
-        <Route path="test" element={<TestPage />} />
         <Route path="/write" element={<Write />} />
-        <Route path="viewCharacter" element={<ViewCharacter />} />
+        <Route path="/viewCharacter" element={<ViewCharacter />} />
+        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/questions" element={<Questions />} />
+        <Route path="/tactics" element={<Tactics />} />
+        <Route path="/suggestion" element={<Suggestion />} />
+        <Route path="/bragging" element={<Bragging />} />
       </Routes>
     </>
   );

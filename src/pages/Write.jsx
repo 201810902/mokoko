@@ -1,11 +1,11 @@
 import "./Write.css";
 import SideMenu from "../component/SideMenu";
 import Logo from "../component/Logo";
-
+import Profile from "../component/Profile";
 const Write = () => {
   return (
     <div className="Write">
-      <Logo />
+      <Profile />
       <SideMenu />
       <div className="writingForm">
         <span>

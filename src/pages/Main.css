@@ -97,7 +97,7 @@
     grid-area: sidebar;
     height: auto;
     align-self: stretch;
-    background-color: lightsalmon;
+    /* background-color: lightsalmon; */
 }
 
 .board1 {

@@ -1,0 +1,41 @@
+.postList {
+    position: fixed;
+    width: 50rem;
+    height: 30rem;
+    background-color: rgb(192, 190, 166);
+    top: 50%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+}
+
+.postListContainer {
+    position: fixed;
+    width: 50rem;
+    height: 40rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.boardName {
+    width: 100%;
+    /* h2와 postList 사이의 공간 */
+    margin: 0;
+    box-sizing: border-box;
+    padding: 40px;
+    text-align: left;
+}
+
+.writeButton {
+    position: fixed;
+    top: 70%;
+    left: 45%;
+    border: none;
+    width: 80px;
+    height: 30px;
+    border-radius: 3px;
+    font-weight: 700;
+}
