@@ -1,40 +1,32 @@
-.container {
+.mainContainer {
     display: grid;
-    padding: 30px;
+    grid-template-columns: 1fr 2fr 2fr;
+    grid-template-rows: 5fr 1.5fr 3fr 3fr;
+    gap: 10px;
     grid-template-areas:
-        "header  main    main"
-        "   a    main    main"
-        "   b   footer  footer";
-    margin-left: 50px;
+        "login banner banner"
+        "sidebar island event"
+        "sidebar board1 board2"
+        "sidebar gallery gallery";
+    padding: 7px;
+    height: 100vh;
+    overflow: auto;
+    box-sizing: border-box;
 }
 
-.navButton {
-    border-style: none;
-    cursor: pointer;
-    font-size: medium;
-}
-
-.header {
-    grid-area: header;
+.loginbox {
+    grid-area: login;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 30px;
-}
+    /* padding: 30px; */
 
-.mainLogo {
-    display: flex;
 }
 
 .jamoLogo {
     width: 30px;
 }
-
-.Banner {
-    grid-area: main;
-}
-
 
 .openLink {
     margin: 10px;
@@ -42,76 +34,88 @@
 }
 
 .kakaotalkLink {
-    width: 60px;
-    height: 100px;
-    margin-bottom: 5px;
     border-style: none;
     cursor: pointer;
     background-image: url(/src/assets/kakaotalkLogo.svg);
     background-repeat: no-repeat;
-    padding-left: 40px;
-    font-size: medium;
-    font-weight: 600;
+    background-size: cover;
+    background-position: center;
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    /* 자식 요소의 크기에 맞추기 위해 사용 */
+    aspect-ratio: attr(data-aspect-ratio);
 }
 
-.kakaotalkLink:hover {
+/* .kakaotalkLink:hover {
     background-color: rgb(243, 221, 20);
     border-radius: 5px;
-}
+} */
 
 .discordLink {
     border-style: none;
-    width: 60px;
-    height: 50px;
-    margin-bottom: 5px;
-    border-style: none;
-    cursor: pointer;
     background-image: url(/src/assets/discordLogo.svg);
     background-repeat: no-repeat;
-    /* background-position: 10px 2px; */
-    padding-left: 40px;
-    /* font-size: medium;
-    font-weight: 600; */
+    background-size: contain;
+    background-position: center;
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    /* 자식 요소의 크기에 맞추기 위해 사용 */
+    aspect-ratio: attr(data-aspect-ratio);
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.login {
+    grid-area: login;
+    background-color: lightblue;
+}
+
+.banner {
+    grid-area: banner;
+    background-color: lightcoral;
+}
+
+.searchbar {
+
+    background-color: lightgoldenrodyellow;
+    height: 100%;
 
 }
 
-.discordLink:hover {
-    background-color: rgb(182, 200, 250);
-    border-radius: 5px;
-
+.island {
+    grid-area: island;
+    background-color: lightgreen;
 }
 
-.birthDay {
-    grid-area: b;
-    background-color: pink;
-    height: 100px;
-    width: 250px;
-    border-radius: 5px;
+.event {
+    grid-area: event;
+    background-color: lightpink;
 }
 
-
-
-.birthdayList {
-    background-color: white;
-    width: 200px;
-    height: 80px;
-    display: flex;
-    justify-content: center;
+.sidebar {
+    grid-area: sidebar;
+    height: auto;
+    align-self: stretch;
+    /* background-color: lightsalmon; */
 }
 
-.footer {
-    background-color: pink;
-    margin-top: 30px;
-    height: 12.5rem;
-    grid-area: footer;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+.board1 {
+    grid-area: board1;
+
+    background-color: lightseagreen;
 }
 
-.board {
-    background-color: yellow;
-    width: 200px;
+.board2 {
+    grid-area: board2;
+
+    background-color: lightsteelblue;
+}
+
+.gallery {
+    grid-area: gallery;
+
+    background-color: lightcyan;
 }
 
 /* 이하는 스와이퍼 부분 css */
@@ -124,6 +128,7 @@ html,
 body {
     position: relative;
     height: 100%;
+
 }
 
 body {
@@ -137,7 +142,7 @@ body {
 
 .swiper {
     max-width: 1024px;
-    max-height: 500px;
+    max-height: 250px;
     width: 100%;
     height: 100%;
 }
@@ -146,46 +151,18 @@ body {
     text-align: center;
     font-size: 18px;
     background: #fff;
-
     /* Center slide text vertically */
     /* display: flex; */
     justify-content: center;
     align-items: center;
+    height: 100%;
 }
 
 .swiper-slide img {
-    display: block;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-
-/* 미디어 쿼리 - 태블릿 및 모바일 크기 */
-@media (max-width: 480px) {
-    .container {
-        padding: 20px;
-    }
-
-    .header {
-        padding: 10px;
-    }
-
-    .mainLogo {
-        justify-content: flex-start;
-    }
-
-    .birthDay {
-        width: 80%;
-        max-width: 300px;
-    }
-
-    .birthdayList {
-        width: 80%;
-        max-width: 160px;
-    }
-
-    .footer {
-        flex-direction: column;
-        height: auto;
-    }
+    align-content: center;
 }

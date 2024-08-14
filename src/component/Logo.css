@@ -1,10 +1,20 @@
-.Logo_Button {
+.main_Logo {
     border-style: none;
-    font-size: x-large;
+    font-size: 150%;
     font-weight: 900;
-    width: fit-content
+    width: fit-content;
+    margin: 5px;
+    cursor: pointer;
 }
 
-.Logo_Button:hover {
+.Logo_Button {
+    border-style: none;
+    font-size: 150%;
+    font-weight: 900;
+    width: fit-content;
+    cursor: pointer;
+}
+
+.main_Logo, Logo_Button:hover {
     cursor: pointer;
 }

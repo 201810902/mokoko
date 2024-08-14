@@ -1,5 +1,6 @@
 import "./Main.css";
 import React from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import kakaotalkLogo from "../assets/kakaotalkLogo.svg";
 import discordLogo from "../assets/discordLogo.svg";
@@ -9,15 +10,19 @@ import banner3 from "../assets/banner3.svg";
 import banner4 from "../assets/banner4.svg";
 import Login from "./Login";
 import Logo from "./../component/Logo";
+import SideMenu from "../component/SideMenu";
 import jamoLogo from "./../assets/jamologo.svg";
+import DailyContent from "./../component/DailyContent";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Keyboard, Pagination, Navigation } from "swiper/modules";
-
+import Searcbar from "../component/SearchMyCharacter";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import SearchCharacter from "../component/SearchMyCharacter";
 
 const Main = () => {
+  const [inputText, setInputText] = useState("");
   const navigate = useNavigate();
   const openTalk = () => {
     window.open("https://open.kakao.com/o/gbZ50Xwd");
@@ -28,10 +33,15 @@ const Main = () => {
   const onClickLogin = () => {
     navigate("/login");
   };
+  const handleInput = (e) => {
+    console.log(e.target.value);
+    const inputValue = e.target.value;
+    setInputText(inputValue);
+  };
   return (
     <>
-      <div className="container">
-        <div className="header">
+      <div className="mainContainer">
+        <div className="item loginbox">
           <div className="mainLogo">
             <Logo />
           </div>
@@ -39,24 +49,19 @@ const Main = () => {
           <button className="navButton" onClick={onClickLogin}>
             로그인
           </button>
-        </div>
-        <div className="openLink">
-          <button className="kakaotalkLink" onClick={openTalk}>
-            자라나는 모코코 오픈카톡
-          </button>
-          <button className="discordLink" onClick={openDiscord}></button>
-        </div>
-        <input placeholder="캐릭터 명을 입력하세요" />
 
-        <div className="Banner">
-          {/* <img src={banner1} /> */}
+          <div className="openLink">
+            <button className="kakaotalkLink" onClick={openTalk}></button>
+            <button className="discordLink" onClick={openDiscord}></button>
+          </div>
+          <SearchCharacter />
+        </div>
+
+        <div className="item banner">
           <Swiper
-            slidesPerView={1}
+            slidesPerView="auto"
             spaceBetween={30}
             loop={true}
-            // breakpoints={{
-            //   '640': {max-width:500px,}
-            // }}
             keyboard={{
               enabled: true,
             }}
@@ -81,15 +86,17 @@ const Main = () => {
             </SwiperSlide>
           </Swiper>
         </div>
-        <div className="footer">
-          <div className="board">썸네일</div>
-          <div className="board">썸네일</div>
-          <div className="board">썸네일</div>{" "}
+        <div className="item sidebar">
+          <SideMenu />
         </div>
-        {/* <div className="birthDay">
-          <h3>이달의 생일🎉</h3>
-          <div className="birthdayList">생일축하해~</div>
-        </div> */}
+        <div className="item island">
+          모험섬 일정
+          <DailyContent />
+        </div>
+        <div className="item event">로아 현재이벤트</div>
+        <div className="item board1">게시판(최근글)</div>
+        <div className="item board2">게시판(인기글)</div>
+        <div className="item gallery">갤러리~~</div>
       </div>
     </>
   );
