@@ -98,11 +98,29 @@
     margin-bottom: 10px;
 }
 
+/* .showPassword {
+    background-image: url(../assets/show-password.svg);
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.hidePassword {
+    background-image: url(../assets/hide-password.svg);
+    background-image: no-repeat;
+} */
+
 
 .SignUp:hover,
 .FindId:hover {
     cursor: pointer;
     color: gray;
+}
+
+.isPWHideButton {
+    background-img: url(../assets/hide-password.svg);
+    width: 30px;
+    height: 30px;
+
 }
 
 .autoLogin {

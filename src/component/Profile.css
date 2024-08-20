@@ -43,19 +43,20 @@
 }
 
 .profImgContainer {
-    width: 100px;
+    width: 90px;
     height: 100px;
     overflow: hidden;
     position: relative;
     margin: 0 auto;
-    border-radius: 60%;
+    border: 1px solid black;
+    /* border-radius: 60%; */
 
 }
 
 .userGrade {
     color: rgb(20, 184, 42);
-    font-weight: 600;
-    font-size: 100%;
+    font-weight: 700;
+    font-size: 95%;
     margin-right: 4px;
     display: flex;
     flex-direction: row;
