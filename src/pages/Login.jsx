@@ -9,7 +9,8 @@ import hide from "../assets/hide-password.svg";
 import Loading from "../component/Loding";
 import Clicked from "../assets/check_on.svg";
 import unClicked from "../assets/check_off.svg";
-
+import debounce from "../utils/debounce";
+import {} from "firebase/auth";
 const Login = () => {
   // const [input, setInput] = useState("");
   const [userInputData, setUserInputData] = useState({ id: "", password: "" });
@@ -42,34 +43,33 @@ const Login = () => {
       // setIsButtonDisabled(true);
       return;
     } else {
-      // const { name, value } = e.target;
-      // setUserInputData({
-      //   ...userInputData,
-      //   [name]: value,
-      // });
-      dispatch(login(userInputData));
+      dispatch(
+        login({ email: userInputData.id, password: userInputData.password })
+      );
       nav("/"); //로그인 후 이동할 페이지
     }
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserInputData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-
     console.log("입력된 값", userInputData);
     setIsButtonDisabled(
       userInputData.id === "" || userInputData.password === ""
     );
   };
+
+  //자동로그인 버튼
   const handleAutoLogin = (e) => {
     if (!isAutoLoginClicked) {
       setIsAutoLoginClicked(true);
     } else setIsAutoLoginClicked(false);
   };
   const onClickButton = (e) => {
-    console.log("입력된 값", e.target.value);
+    //회원가입/아이디찾기 버튼
     if (e.target.className === "SignUp") {
       nav("/signup");
     } else {
@@ -102,6 +102,10 @@ const Login = () => {
                 value={userInputData.password}
                 placeholder="비밀번호를 입력하세요"
               />
+              {/* <button
+                type="button"
+                className="isPWHideButton hidePassword showPassword"
+              ></button> */}
               <label className="isAutoLogin">
                 <img
                   src={isAutoLoginClicked ? Clicked : unClicked}
@@ -115,6 +119,9 @@ const Login = () => {
                 type="submit"
                 className={`clickLogin ${isButtonDisabled ? "disabled" : ""}`}
                 disabled={isButtonDisabled}
+                onClick={() => {
+                  dispatch(login());
+                }}
               >
                 로그인
               </button>

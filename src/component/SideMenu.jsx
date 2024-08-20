@@ -1,17 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./SideMenu.css";
-import Strategy from "../assets/strategy.svg";
-import Dropdown from "./DropdownMenu";
 
 const SideMenu = () => {
-  //   const menus = [
-  //     { name: "공략게시판", path: "/community" },
-  //     { name: "비틱게시판", path: "/" },
-  //     { name: "궁금해요", path: "/community" },
-  //     { name: "자모앨범", path: "/community" },
-  //     { name: "건의합니다", path: "/community" },
-  //   ];
+
   const onClickMenu = (e) => {
     console.log("click sideMenu");
   };
