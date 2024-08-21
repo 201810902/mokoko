@@ -1,31 +1,71 @@
+select {
+    -webkit-appearance: none;
+    /* for chrome */
+    -moz-appearance: none;
+    /*for firefox*/
+    appearance: none;
+}
+
 .writingForm {
-    width: 80vh;
-    height: 100vh;
-    /*display: flex;*/
+    width: 100vh;
+    /* 필요에 따라 너비 조정 */
+    height: auto;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     position: absolute;
-    top: 30%;
+    top: 50%;
+    left: 55%;
+    transform: translate(-50%, -50%);
     padding: 10px;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    /* 선택 사항: 그림자 효과 추가 */
+    background-color: white;
+    /* 선택 사항: 배경색 설정 */
+    border-radius: 10px;
+    /* 선택 사항: 테두리 모서리 둥글게 설정 */
+}
+
+.category {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.postArea {
+    width: 45rem;
+    height: 30rem;
+    border: none;
+    resize: none;
+    /*크기고정*/
+    border: 1px solid lightgray;
 }
 
 .postTitle {
-    width: 65%;
+    width: 31rem;
     margin: 5px;
-    height: 30px;
-    border-radius: 3px;
+    height: 40px;
+    border-radius: 5px;
     border-style: none;
-    text-indent: 10px;
+    text-indent: 15px;
+    background-color: rgb(242, 239, 239);
 }
 
-    .selectWriteCategory {
-    height: 30px;
-    width: fit-content;
+.selectCategory {
+    height: 40px;
+    width: 210px;
     padding: 5px;
     border-radius: 3px;
     margin-right: 5px;
-
+    border: none;
+    font-size: medium;
+    text-indent: 5px;
+    background-color: rgb(207, 235, 179);
+    background-image: url(../assets/arrow.png);
+    background-repeat: no-repeat;
+    background-size: 15px 8px;
+    background-position: 97%;
 
 }
 
@@ -39,14 +79,44 @@ input[type=file]::-webkit-file-upload-button {
 
 .postSubmitBtn {
     border-style: none;
-    width: 100px;
+    width: 130px;
     background-color: rgb(228, 239, 212);
-    height: 30px;
+    height: 40px;
     border-radius: 3px;
     cursor: pointer;
+    margin: 10px;
+    font-size: medium;
+
+
 }
 
 .postSubmitBtn:hover {
     background-color: rgb(157, 231, 83);
     color: rgb(255, 255, 255);
+}
+
+.submitSection {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 99%;
+    margin-top: 40px;
+}
+
+.writingHeader {
+    align-self: flex-start;
+    width: 100%;
+    margin-bottom: 5px;
+    margin-left: 20px;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
 }
