@@ -2,50 +2,163 @@ import "./Write.css";
 import SideMenu from "../component/SideMenu";
 import Logo from "../component/Logo";
 import Profile from "../component/Profile";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import debounce from "../utils/debounce";
+import ReactQuill from "react-quill-new";
+import "quill/dist/quill.snow.css";
+import { dbService } from "../../firebase";
+import { collection, doc, addDoc, setDoc } from "firebase/firestore";
+import { fbStorage } from "../../firebase";
+import { getStorage, ref } from "firebase/storage";
+import { useNavigate } from "react-router-dom";
 
 const Write = () => {
-  const [inputData, setInputData] = useState("");
+  const navigate = useNavigate();
+  class Post {
+    constructor(category, postTitle, post, date, user) {
+      this.category = category;
+      this.postTitle = postTitle;
+      this.post = post; //포스트 내용
+      this.date = date;
+      this.user = user;
+    }
+  }
+  const postConverter = {
+    toFirestore: (post) => {
+      return {
+        category: post.category,
+        postTitle: post.postTitle,
+        post: post.post,
+        date: post.date,
+        user: post.user,
+      };
+    },
+    fromFirestore: (snapshot, options) => {
+      const data = snapshot.data(options);
+      return new Post(
+        data.category,
+        data.postTitle,
+        data.post,
+        data.date,
+        data.user
+      );
+    },
+  };
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [inputData, setInputData] = useState({
+    category: "",
+    postTitle: "",
+    post: "",
+    date: currentDate,
+    user: "",
+  });
 
+  const storage = getStorage();
+  const storageRef = ref(storage);
+  const postRef = ref(storage);
   const handleChange = (e) => {
     const { name, value } = e.target;
+    // setInputData((prevData) => ({ ...prevData, [name]: value }));
+    // console.log(inputData.value);
     setInputData((prevData) => ({ ...prevData, [name]: value }));
-    console.log(inputData);
   };
 
-  const handleSubmit = (e) => {};
+  const handleQuillChange = (value) => {
+    setInputData((prevData) => ({ ...prevData, post: value }));
+  };
 
+  useEffect(() => {
+    console.log(inputData);
+  }, [inputData]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!confirm("글을 등록하시겠습니까?")) {
+      return;
+    } else {
+      try {
+        const post = new Post(
+          inputData.category,
+          inputData.postTitle,
+          inputData.post,
+          inputData.date,
+          inputData.user
+        );
+
+        const collectionRef = collection(
+          dbService,
+          inputData.category
+        ).withConverter(postConverter);
+        await addDoc(collectionRef, post);
+
+        console.log("Document successfully written!");
+        alert("🌱 게시글이 정상적으로 등록되었습니다. 🌱 ");
+        navigate(`/${inputData.category}`);
+      } catch (error) {
+        console.error("Error writing document: ", error);
+      }
+    }
+  };
+  const modules = {
+    toolbar: [
+      [{ header: "1" }, { header: "2" }, { font: [] }],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["bold", "italic", "underline"],
+      [{ color: [] }, { background: [] }],
+      [{ align: [] }],
+      ["link"],
+      ["image"],
+    ],
+  };
   return (
-    <div className="Write">
-      {/*<Profile />*/}
-      {/*<SideMenu />*/}
-      <div className="writingForm">
-        <h2>새 글 쓰기</h2>
-        <span>
+    <div className="write">
+      <form className="writingForm" onSubmit={handleSubmit}>
+        <h1 className="writingHeader">새 글 쓰기</h1>
+        <div className="category">
           {/*포스트 해당 게시판 선택*/}
-          <select className="selectWriteCategory">
-            <option value="none">게시판을 선택하세요</option>
-            <option value="">자유게시판</option>
-            <option value="">공략게시판</option>
-            <option value="">궁금해요</option>
-            <option value="">비틱게시판</option>
-            <option value="">자모앨범</option>
-            <option value="">건의합니다</option>
+          <select
+            className="selectCategory"
+            name="category"
+            value={inputData.category}
+            onChange={handleChange}
+          >
+            <option value="none"> 게시판을 선택하세요</option>
+            <option value="community">💬 자유게시판</option>
+            <option value="Tactics">⚔️ 공략게시판</option>
+            <option value="질문게시판">❓ 궁금해요</option>
+            <option value="비틱게시판">😋 비틱게시판</option>
+            <option value="자모앨범">📸 자모앨범</option>
+            <option value="건의합니다">🙋🏻 건의합니다</option>
           </select>
 
           <label htmlFor="write">
-            <input className="postTitle" placeholder="제목을 입력해주세요" />
+            <input
+              id="postTitle"
+              name="postTitle"
+              className="postTitle"
+              placeholder="제목을 입력해주세요"
+              aria-required="true"
+              onChange={handleChange}
+            />
           </label>
-        </span>
-
-        <textarea rows="20" cols="60"></textarea>
-        <label htmlFor="file">
-          <input type="file" accept="image/*" />
+        </div>
+        <label htmlFor="postArea" className="visually-hidden">
+          내용
         </label>
-        <button type="sumbit" className="postSubmitBtn">
-          작성 완료
-        </button>
-      </div>
+        {/* <textarea rows="50" cols="100" className="postArea"></textarea> */}
+        <ReactQuill
+          style={{ width: "725px", height: "400px" }}
+          modules={modules}
+          value={inputData.post}
+          onChange={handleQuillChange}
+        />
+        <div className="submitSection">
+          {/* <button>임시 저장</button> */}
+          <button type="sumbit" className="postSubmitBtn">
+            작성 완료
+          </button>
+        </div>
+      </form>
     </div>
   );
 };
