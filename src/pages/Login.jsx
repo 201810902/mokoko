@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { login } from "../redux/user";
+import { loginUser } from "../redux/user";
 import "./Login.css";
 import Logo from "./../component/Logo";
 import show from "../assets/show-password.svg";
@@ -10,9 +10,10 @@ import Loading from "../component/Loding";
 import Clicked from "../assets/check_on.svg";
 import unClicked from "../assets/check_off.svg";
 import debounce from "../utils/debounce";
-import {} from "firebase/auth";
+import { authService } from "../../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+
 const Login = () => {
-  // const [input, setInput] = useState("");
   const [userInputData, setUserInputData] = useState({ id: "", password: "" });
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const dispatch = useDispatch();
@@ -32,21 +33,39 @@ const Login = () => {
     e.preventDefault();
     console.log("id:", userInputData.id, "pw:", userInputData.password);
     if (userInputData.id === "") {
-      alert("아이디를 입력하세요");
+      alert("아이디를 입력해주세요");
       idInputRef.current.focus();
       // setIsButtonDisabled(true);
       // console.log(idInputRef.current, userInputData);
       return;
     } else if (userInputData.password === "") {
-      alert("비밀번호를 입력하세요");
+      alert("비밀번호를 입력해주세요");
       passwordInputRef.current.focus();
       // setIsButtonDisabled(true);
       return;
     } else {
       dispatch(
-        login({ email: userInputData.id, password: userInputData.password })
-      );
-      nav("/"); //로그인 후 이동할 페이지
+        loginUser({ email: userInputData.id, password: userInputData.password })
+      )
+        // login({ email: userInputData.id, password: userInputData.password })
+        .unwrap()
+        .then(() => {
+          console.log("로그인 성공!");
+          nav("/");
+          alert(`${displayName}님 환영합니다`);
+          const user = authService.currentUser;
+          const displayName = user.displayName;
+
+          // .then((userCredential) => {
+          //   const user = userCredential.user;
+          //   console.log("로그인 성공!");
+          //   console.log(`${user.nickname}님 환영합니다`);
+          console.log(displayName);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+        });
     }
   };
 
@@ -119,9 +138,6 @@ const Login = () => {
                 type="submit"
                 className={`clickLogin ${isButtonDisabled ? "disabled" : ""}`}
                 disabled={isButtonDisabled}
-                onClick={() => {
-                  dispatch(login());
-                }}
               >
                 로그인
               </button>

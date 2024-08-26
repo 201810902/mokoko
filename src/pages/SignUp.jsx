@@ -8,14 +8,15 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   sendEmailVerification,
+  updateProfile,
 } from "firebase/auth";
-import { authService } from "../../firebase.js";
+import { authService, dbService } from "../../firebase.js";
+import { collection, doc, setDoc } from "firebase/firestore";
 
 const SignUp = () => {
   const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
   console.log("SignUp 컴포넌트 렌더링 시작");
-  const auth = authService;
   // const [id, setId] = useState("");
   // const [password, setPassword] = useState("");
   const [formState, setformState] = useState({
@@ -34,36 +35,58 @@ const SignUp = () => {
   };
   const handleRegister = async (e) => {
     e.preventDefault();
-    const { password, passwordConfirm } = formState;
+    const { nickname, email, password, passwordConfirm } = formState;
     if (password !== passwordConfirm) {
       alert("비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
       return;
     }
-    createUserWithEmailAndPassword(auth, formState.email, formState.password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        navigate("/");
-        alert(
-          "🌱 가입이 완료되었습니다. 자라나는 모코코에 오신 것을 환영합니다"
-        );
-      })
-      .catch(function (error) {
-        const errorMessage = error.message;
-        switch (error.code) {
-          case "auth/weak-password":
-            setErrorMsg(
-              "비밀번호가 너무 짧습니다. 6자리 이상으로 설정해주세요."
-            );
-            break;
-          case "auth/invalid-email":
-            setErrorMsg("잘못된 이메일 주소입니다. 다시 입력해주세요.");
-            break;
-          case "auth/email-already-in-use":
-            setErrorMsg("이미 가입되어 있는 계정입니다");
-            break;
-        }
-        alert(errorMsg);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        authService,
+        email,
+        password
+      );
+      const user = userCredential.user;
+
+      await updateProfile(user, { displayName: nickname });
+
+      await setDoc(doc(dbService, "User", user.uid), {
+        nickName: nickname,
+        email: email,
+        grade: "🌱소중한 자모",
+        profileImg: "",
+        visitCount: 0,
+        postNumber: 0,
+        commentNumber: 0,
       });
+
+      alert("🌱 가입이 완료되었습니다. 자라나는 모코코에 오신 것을 환영합니다");
+      navigate("/");
+      console.log(user.displayName);
+    } catch (error) {
+      // createUserWithEmailAndPassword(auth, formState.email, formState.password)
+      //   .then(async (userCredential) => {
+      //     const user = userCredential.user;
+      //     await updateProfile(auth.user, { displayName: formState.nickname });
+      //     navigate("/");
+      //     alert(
+      //       "🌱 가입이 완료되었습니다. 자라나는 모코코에 오신 것을 환영합니다"
+      //     );
+      //   })
+      const errorMessage = error.message;
+      switch (error.code) {
+        case "auth/weak-password":
+          setErrorMsg("비밀번호가 너무 짧습니다. 6자리 이상으로 설정해주세요.");
+          break;
+        case "auth/invalid-email":
+          setErrorMsg("잘못된 이메일 주소입니다. 다시 입력해주세요.");
+          break;
+        case "auth/email-already-in-use":
+          setErrorMsg("이미 가입되어 있는 계정입니다");
+          break;
+      }
+      alert(errorMsg);
+    }
 
     //파이어베이스 인증작업
   };
@@ -109,6 +132,7 @@ const SignUp = () => {
             가입하기
           </button>
         </form>
+        {errorMsg && <p className="error">{errorMsg}</p>}
       </div>
     </div>
   );
