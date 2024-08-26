@@ -6,21 +6,23 @@ import { useState, useEffect } from "react";
 import debounce from "../utils/debounce";
 import ReactQuill from "react-quill-new";
 import "quill/dist/quill.snow.css";
-import { dbService } from "../../firebase";
+import { authService, dbService, fbStorage } from "../../firebase";
 import { collection, doc, addDoc, setDoc } from "firebase/firestore";
-import { fbStorage } from "../../firebase";
 import { getStorage, ref } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Write = () => {
   const navigate = useNavigate();
+  // const user = authService.currentUser;
+  const nickName = useSelector((state) => state.user.value.nickName);
   class Post {
-    constructor(category, postTitle, post, date, user) {
+    constructor(category, postTitle, post, date, userId) {
       this.category = category;
       this.postTitle = postTitle;
       this.post = post; //포스트 내용
       this.date = date;
-      this.user = user;
+      this.userId = nickName;
     }
   }
   const postConverter = {
@@ -30,7 +32,7 @@ const Write = () => {
         postTitle: post.postTitle,
         post: post.post,
         date: post.date,
-        user: post.user,
+        userId: nickName,
       };
     },
     fromFirestore: (snapshot, options) => {
@@ -40,7 +42,7 @@ const Write = () => {
         data.postTitle,
         data.post,
         data.date,
-        data.user
+        data.nickName
       );
     },
   };
@@ -50,7 +52,7 @@ const Write = () => {
     postTitle: "",
     post: "",
     date: currentDate,
-    user: "",
+    userId: nickName,
   });
 
   const storage = getStorage();
@@ -73,6 +75,8 @@ const Write = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log();
+    
     if (!confirm("글을 등록하시겠습니까?")) {
       return;
     } else {
@@ -82,7 +86,7 @@ const Write = () => {
           inputData.postTitle,
           inputData.post,
           inputData.date,
-          inputData.user
+          inputData.loginUser.nickName
         );
 
         const collectionRef = collection(
@@ -153,7 +157,6 @@ const Write = () => {
           onChange={handleQuillChange}
         />
         <div className="submitSection">
-          {/* <button>임시 저장</button> */}
           <button type="sumbit" className="postSubmitBtn">
             작성 완료
           </button>
