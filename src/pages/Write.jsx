@@ -7,22 +7,46 @@ import debounce from "../utils/debounce";
 import ReactQuill from "react-quill-new";
 import "quill/dist/quill.snow.css";
 import { authService, dbService, fbStorage } from "../../firebase";
-import { collection, doc, addDoc, setDoc } from "firebase/firestore";
+import { collection, doc, addDoc, updateDoc } from "firebase/firestore";
 import { getStorage, ref } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { updateProfile } from "firebase/auth";
 
 const Write = () => {
   const navigate = useNavigate();
   // const user = authService.currentUser;
-  const nickName = useSelector((state) => state.user.value.nickName);
+  const user = useSelector((state) => state.user.value);
+  console.log(user);
+  const userId = user.uid;
+  const userNickname = user.nickName;
+  const newpostNumb = user.postNumber;
+  console.log("userId", userId);
+  console.log("niciname:", userNickname);
+
+  const userDocRef = doc(dbService, "User", userId);
+  const postCollectionRef = collection(userDocRef, "post");
+  const BackButtonListener = () => {
+    // useEffect(() => {
+    //   const handlePopState = (e) => {
+    //     confirm(
+    //       "이 페이지에서 나가면 작성중인 내용이 저장되지 않습니다. 나가시겠습니까?"
+    //     )
+    //       ? navigate(-1)
+    //     : console.log("이동하지 않음");
+    //   };
+    //   return () => {
+    //     second;
+    //   };
+    // }, [third]);
+  };
   class Post {
     constructor(category, postTitle, post, date, userId) {
       this.category = category;
       this.postTitle = postTitle;
       this.post = post; //포스트 내용
       this.date = date;
-      this.userId = nickName;
+      this.userId = userId;
     }
   }
   const postConverter = {
@@ -32,7 +56,7 @@ const Write = () => {
         postTitle: post.postTitle,
         post: post.post,
         date: post.date,
-        userId: nickName,
+        userId: userId,
       };
     },
     fromFirestore: (snapshot, options) => {
@@ -42,7 +66,7 @@ const Write = () => {
         data.postTitle,
         data.post,
         data.date,
-        data.nickName
+        data.userId
       );
     },
   };
@@ -52,12 +76,14 @@ const Write = () => {
     postTitle: "",
     post: "",
     date: currentDate,
-    userId: nickName,
+    userId: "",
   });
 
   const storage = getStorage();
   const storageRef = ref(storage);
   const postRef = ref(storage);
+  console.log("게시글 수", user.postNumber);
+  const newPostNum = user.postNumber;
   const handleChange = (e) => {
     const { name, value } = e.target;
     // setInputData((prevData) => ({ ...prevData, [name]: value }));
@@ -76,7 +102,7 @@ const Write = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log();
-    
+
     if (!confirm("글을 등록하시겠습니까?")) {
       return;
     } else {
@@ -86,15 +112,19 @@ const Write = () => {
           inputData.postTitle,
           inputData.post,
           inputData.date,
-          inputData.loginUser.nickName
+          inputData.userId
         );
 
         const collectionRef = collection(
           dbService,
           inputData.category
         ).withConverter(postConverter);
-        await addDoc(collectionRef, post);
-
+        await addDoc(collectionRef, post); //여기까지 작성한 문서+작성자 UID 업로드
+        const userRef = doc(dbService, "User", user.uid);
+        await updateDoc(userRef, { postNumber: user.postNumber + 1 });
+        //작성한 게시물 수 +1
+        const postDocRef = doc(postCollectionRef, doc.id);
+        await addDoc(postDocRef, doc.id);
         console.log("Document successfully written!");
         alert("🌱 게시글이 정상적으로 등록되었습니다. 🌱 ");
         navigate(`/${inputData.category}`);
@@ -116,6 +146,8 @@ const Write = () => {
   };
   return (
     <div className="write">
+      <Logo />
+      <Profile />
       <form className="writingForm" onSubmit={handleSubmit}>
         <h1 className="writingHeader">새 글 쓰기</h1>
         <div className="category">

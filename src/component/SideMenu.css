@@ -1,16 +1,14 @@
 .sideMenu {
-    position: absolute;
-    /* left: 3%; */
-    /* transform: translate(-225%, 5%); */
-    top: 50%;
-    background-color: rgba(243, 243, 243, 0.819);
+    /* position: relative; */
+    /* transform: translate(5%, -10%); */
     height: fit-content;
     width: 230px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     /* align-items: center; */
-    z-index: 10;
+    font-size: medium;
+
 
 }
 
@@ -29,6 +27,13 @@
     cursor: pointer;
     /* text-align: center; */
     font-weight: 600;
+    color: black;
+}
+
+.sideItem:hover {
+    font-weight: 800;
+    color: green;
+    text-shadow: 2px 2px 4px rgba(99, 207, 97, 0.5);
 }
 
 ul {
@@ -46,6 +51,12 @@ a:visited {
     color: black;
 }
 
+.chattingBoard {
+    background-image: url(/src/assets/strategy.svg);
+}
+
+
+
 .moveToLostark {
     background-image: url(/src/assets/logo_w.png);
     background-color: black;
@@ -59,14 +70,9 @@ a:visited {
     display: block;
     margin-left: 10px;
     cursor: pointer;
-    position: relative;
+    /* position: relative; */
     /* 자식 요소에 절대 위치 지정하기 위해 설정 */
     overflow: hidden;
-    margin: 10px;
+    margin: 0px;
 
-}
-
-
-.chattingBoard {
-    background-image: url(/src/assets/strategy.svg);
 }

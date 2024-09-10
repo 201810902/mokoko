@@ -14,11 +14,6 @@
 
 }
 
-#root {
-    background-image: url("../assets/Travel with MOKOKO.jpg");
-    background-size: cover;
-}
-
 .formContainer {
     width: 400px;
     display: flex;
