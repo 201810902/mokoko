@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../redux/user"; //Redux Thunk
+import { loginUser } from "../redux/user";
 import "./Login.css";
 import Logo from "./../component/Logo";
 import show from "../assets/show-password.svg";
@@ -10,20 +10,18 @@ import Loading from "../component/Loding";
 import Clicked from "../assets/check_on.svg";
 import unClicked from "../assets/check_off.svg";
 import debounce from "../utils/debounce";
+import { authService } from "../../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const Login = () => {
   const [userInputData, setUserInputData] = useState({ id: "", password: "" });
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const [isPWHide, setisPWHide] = useState(true);
-  const [isAutoLoginClicked, setIsAutoLoginClicked] = useState(false);
-
   const dispatch = useDispatch();
   const idInputRef = useRef();
   const passwordInputRef = useRef();
-  const navigate = useNavigate();
-
-  const user = useSelector((state) => state.user.value);
-  const { status, error } = useSelector((state) => state.user);
+  const nav = useNavigate();
+  const [isPWHide, setisPWHide] = useState(true);
+  const [isAutoLoginClicked, setIsAutoLoginClicked] = useState(false);
 
   useEffect(() => {
     setIsButtonDisabled(
@@ -52,33 +50,21 @@ const Login = () => {
         // login({ email: userInputData.id, password: userInputData.password })
         .unwrap()
         .then(() => {
-          // const user = authService.currentUser;
-          // const displayName = user.displayName;
           console.log("로그인 성공!");
-          console.log(loginUser);
+          nav("/");
+          alert(`${displayName}님 환영합니다`);
+          const user = authService.currentUser;
+          const displayName = user.displayName;
 
-          navigate("/");
-          // alert(`${user.displayName}님 환영합니다`);
+          // .then((userCredential) => {
+          //   const user = userCredential.user;
+          //   console.log("로그인 성공!");
+          //   console.log(`${user.nickname}님 환영합니다`);
+          console.log(displayName);
         })
         .catch((error) => {
-          console.error("Login Error details", error);
-          switch (error.code) {
-            case "auth/user-not-found":
-              alert("가입되지 않은 사용자 입니다.");
-              break;
-            case "auth/wrong-password":
-              alert("비밀번호가 일치하지 않습니다.");
-              break;
-            case "auth/invalid-email":
-              alert("유효하지 않은 이메일 형식입니다");
-              break;
-            default:
-              alert("로그인에 실패했습니다. 다시 시도해주세요.");
-              break;
-          }
-          // const errorCode = error.code;
-          // const errorMessage = error.message;
-          // console.log(errorCode);
+          const errorCode = error.code;
+          const errorMessage = error.message;
         });
     }
   };
@@ -104,9 +90,9 @@ const Login = () => {
   const onClickButton = (e) => {
     //회원가입/아이디찾기 버튼
     if (e.target.className === "SignUp") {
-      navigate("/signup");
+      nav("/signup");
     } else {
-      navigate("/findid");
+      nav("/findid");
     }
   };
   return (
@@ -129,8 +115,7 @@ const Login = () => {
               <input
                 ref={passwordInputRef}
                 className="inputForm showPassword hidePassword"
-                // type={isPWHide ? "hidePW" : "showPW"}
-                type={isPWHide ? "text" : "password"}
+                type={isPWHide ? "hidePW" : "showPW"}
                 name="password"
                 onChange={handleChange}
                 value={userInputData.password}

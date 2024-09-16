@@ -1,28 +1,17 @@
-#root {
-    background-image: url("../assets/Travel with MOKOKO.jpg");
-    background-size: cover;
-    aspect-ratio: 16/9;
-    /* 적절한 비율로 대체 */
-    min-height: 100%;
-    background-attachment: scroll;
-}
-
 .mainContainer {
     display: grid;
     grid-template-columns: 1fr 2fr 2fr;
-    /* grid-template-rows: 4fr 1fr 2fr 2fr; */
-    grid-template-rows: minmax(200px, 4fr) 1fr 2fr 2fr;
+    grid-template-rows: 5fr 1.5fr 3fr 3fr;
     gap: 10px;
     grid-template-areas:
-        /* "header1 header header" */
         "login banner banner"
         "sidebar island event"
         "sidebar board1 board2"
         "sidebar gallery gallery";
     padding: 7px;
-    height: 100%;
+    height: 100vh;
     overflow: auto;
-    /* box-sizing: border-box; */
+    box-sizing: border-box;
 }
 
 .loginbox {
@@ -31,19 +20,17 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    /* padding: 30px; */
+
 }
 
-.loginButton:hover {
-    cursor: pointer;
-    background-color: green;
-    color: white;
+.jamoLogo {
+    width: 30px;
 }
-
 
 .openLink {
+    margin: 10px;
     display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .kakaotalkLink {
@@ -56,26 +43,14 @@
     width: 40px;
     height: 40px;
     display: inline-block;
-    /* margin-right: 30px; */
     /* 자식 요소의 크기에 맞추기 위해 사용 */
     aspect-ratio: attr(data-aspect-ratio);
-    border-radius: 3px;
 }
 
 /* .kakaotalkLink:hover {
     background-color: rgb(243, 221, 20);
     border-radius: 5px;
 } */
-.linkBtn {
-    display: flex;
-    text-align: center;
-    align-items: center;
-}
-
-.kakaotalkLink,
-.discordLink {
-    margin-left: 10px;
-}
 
 .discordLink {
     border-style: none;
@@ -89,7 +64,6 @@
     /* 자식 요소의 크기에 맞추기 위해 사용 */
     aspect-ratio: attr(data-aspect-ratio);
     background-color: rgba(0, 0, 0, 0);
-
 }
 
 .login {
@@ -97,20 +71,13 @@
     background-color: lightblue;
 }
 
-.sidebar {
-    position: relative;
-    left: 2%;
-    top: -10%;
-}
-
 .banner {
     grid-area: banner;
-    /* background-color: lightcoral; */
+    background-color: lightcoral;
 }
 
-
-
 .searchbar {
+
     background-color: lightgoldenrodyellow;
     height: 100%;
 
@@ -130,20 +97,24 @@
     grid-area: sidebar;
     height: auto;
     align-self: stretch;
+    /* background-color: lightsalmon; */
 }
 
 .board1 {
     grid-area: board1;
+
     background-color: lightseagreen;
 }
 
 .board2 {
     grid-area: board2;
+
     background-color: lightsteelblue;
 }
 
 .gallery {
     grid-area: gallery;
+
     background-color: lightcyan;
 }
 
@@ -155,11 +126,8 @@
 
 html,
 body {
-    /* position: relative; */
+    position: relative;
     height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
 
 }
 
@@ -169,12 +137,12 @@ body {
     font-size: 14px;
     color: #000;
     margin: 0;
-    /* padding: ; */
+    padding: 0;
 }
 
 .swiper {
-    max-width: 1920px;
-    max-height: 400px;
+    max-width: 1024px;
+    max-height: 250px;
     width: 100%;
     height: 100%;
 }

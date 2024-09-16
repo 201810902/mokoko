@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { authService } from "../../firebase";
 
 const initialStateValue = {
@@ -11,7 +11,7 @@ const initialStateValue = {
   postNumber: 0,
   commentNumber: 0,
 };
-//로그인
+
 export const loginUser = createAsyncThunk(
   "user/loginUser",
   async ({ email, password }, { rejectWithValue }) => {
@@ -37,41 +37,6 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-//로그아웃
-export const logoutUser = createAsyncThunk(
-  "user/logoutUser",
-  async (_, { rejectWithValue }) => {
-    try {
-      await signOut(authService);
-    } catch (error) {
-      await rejectWithValue(error.message);
-    }
-  }
-);
-
-// export const fetchUserData = createAsyncThunk(
-//   "user/fetchUserData",
-//   async (_, { rejectWithValue }) => {
-//     try {
-//       const user = authService.currentUser;
-//       if (user) {
-//         return {
-//           nickName: user.displayName || "Unknown",
-//           email: user.email,
-//           profileImg: user.photoURL || "",
-//           grade: user.grade,
-//           visitCount: user.visitCount,
-//           postNumber: user.postNumber,
-//           commentNumber: user.commentNumber,
-//         };
-//       } else {
-//         throw new Error("User not authenticated");
-//       }
-//     } catch (error) {
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
 export const userSlice = createSlice({
   name: "user",
   initialState: { value: initialStateValue },
@@ -95,33 +60,9 @@ export const userSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
-      })
-      .addCase(logoutUser.pending, (state) => {
-        state.status = "loading"; // 로그아웃 요청이 진행중
-      })
-      .addCase(logoutUser.fulfilled, (state) => {
-        state.status = "idle";
-        state.value = initialStateValue;
-        //로그아웃 작업이 완료되면 idle상태로 변경됨
-      })
-      .addCase(logoutUser.rejected, (state, action) => {
-        state.status = "failed"; //로그아웃 작업이 실패한 경우
-        state.error = action.payload;
       });
-    // .addCase(fetchUserData.pending, (state) => {
-    //   state.status = "loading";
-    // })
-    // .addCase(fetchUserData.fulfilled, (state, action) => {
-    //   state.status = "succeeded";
-    //   state.value = action.payload;
-    // })
-    // .addCase(fetchUserData.rejected, (state, action) => {
-    //   state.status = "failed";
-    //   state.error = action.payload;
-    // });
   },
 });
 
 export default userSlice.reducer;
-export const { login, logout, updateUser, setStatus, setError } =
-  userSlice.actions;
+export const { login, logout } = userSlice.actions;
