@@ -11,18 +11,42 @@ import { collection, doc, addDoc, updateDoc, setDoc } from "firebase/firestore";
 import { getStorage, ref } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { updateProfile } from "firebase/auth";
 
 const Write = () => {
   const navigate = useNavigate();
   // const user = authService.currentUser;
-  const nickName = useSelector((state) => state.user.value.nickName);
+  const user = useSelector((state) => state.user.value);
+  console.log(user);
+  const userId = user.uid;
+  const userNickname = user.nickName;
+  const newpostNumb = user.postNumber;
+  console.log("userId", userId);
+  console.log("niciname:", userNickname);
+
+  const userDocRef = doc(dbService, "User", userId);
+  const postCollectionRef = collection(userDocRef, "post");
+  const BackButtonListener = () => {
+    // useEffect(() => {
+    //   const handlePopState = (e) => {
+    //     confirm(
+    //       "이 페이지에서 나가면 작성중인 내용이 저장되지 않습니다. 나가시겠습니까?"
+    //     )
+    //       ? navigate(-1)
+    //     : console.log("이동하지 않음");
+    //   };
+    //   return () => {
+    //     second;
+    //   };
+    // }, [third]);
+  };
   class Post {
     constructor(category, postTitle, post, date, userId) {
       this.category = category;
       this.postTitle = postTitle;
       this.post = post; //포스트 내용
       this.date = date;
-      this.userId = nickName;
+      this.userId = userId;
     }
   }
   const postConverter = {
@@ -32,7 +56,7 @@ const Write = () => {
         postTitle: post.postTitle,
         post: post.post,
         date: post.date,
-        userId: nickName,
+        userId: userId,
       };
     },
     fromFirestore: (snapshot, options) => {
@@ -42,7 +66,7 @@ const Write = () => {
         data.postTitle,
         data.post,
         data.date,
-        data.nickName
+        data.userId
       );
     },
   };
@@ -52,12 +76,14 @@ const Write = () => {
     postTitle: "",
     post: "",
     date: currentDate,
-    userId: nickName,
+    userId: "",
   });
 
   const storage = getStorage();
   const storageRef = ref(storage);
   const postRef = ref(storage);
+  console.log("게시글 수", user.postNumber);
+  const newPostNum = user.postNumber;
   const handleChange = (e) => {
     const { name, value } = e.target;
     // setInputData((prevData) => ({ ...prevData, [name]: value }));
@@ -84,7 +110,7 @@ const Write = () => {
           inputData.postTitle,
           inputData.post,
           inputData.date,
-          inputData.loginUser.nickName
+          inputData.userId
         );
 
         const collectionRef = collection(
@@ -125,6 +151,8 @@ const Write = () => {
   };
   return (
     <div className="write">
+      <Logo />
+      <Profile />
       <form className="writingForm" onSubmit={handleSubmit}>
         <h1 className="writingHeader">새 글 쓰기</h1>
         <div className="category">

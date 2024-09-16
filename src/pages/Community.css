@@ -1,41 +1,201 @@
-.postList {
-    position: fixed;
-    width: 50rem;
-    height: 30rem;
-    background-color: rgb(192, 190, 166);
-    top: 50%;
-    left: 55%;
-    transform: translate(-50%, -50%);
+.page {
+    height: 100%;
+}
+
+.profileContainer {
+    position: relative;
+    left: 5%;
+    top: 10%;
+}
+
+
+
+.menuContainer {
+    position: relative;
+    left: -37%;
+    top: 15%;
+}
+
+
+.sortButton {
+    transform: translate(320%, -20%);
+
+}
+
+.viewLatest,
+.viewOldest,
+.LatestBtn,
+.OldestBtn {
+    border-style: none;
+    background-color: transparent;
+
+}
+
+.viewLatest,
+.viewOldest {
+    font-weight: 800;
+    color: rgb(29, 120, 29)
 }
 
 .postListContainer {
-    position: fixed;
-    width: 50rem;
-    height: 40rem;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    width: 60%;
+    height: 70%;
+    left: 27%;
+    bottom: 58%;
+    /* transform: translate(40%, -80%); */
     display: flex;
     flex-direction: column;
     align-items: center;
+    /* border: 1px solid black; */
+    padding: 20px;
+    background-color: rgb(255, 255, 255, 0.6)
+}
+
+.replyMark {
+    margin-left: 3px;
+    color: rgb(61, 170, 114);
+}
+
+.postList {
+    width: 100%;
+    height: 100%;
+    border-bottom: 1px solid black;
+}
+
+.boardPageControl {
+    position: relative;
+    bottom: -20px;
+    margin-bottom: 10px;
 }
 
 .boardName {
     width: 100%;
-    /* h2와 postList 사이의 공간 */
-    margin: 0;
     box-sizing: border-box;
-    padding: 40px;
+    margin-left: 30px;
     text-align: left;
+    position: relative;
+    font-size: x-large;
+    height: 10px;
+    padding-bottom: 15px;
 }
 
 .writeButton {
-    position: fixed;
-    top: 70%;
-    left: 45%;
+    position: relative;
+    bottom: -3%;
+    left: 41%;
     border: none;
-    width: 80px;
-    height: 30px;
-    border-radius: 3px;
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
     font-weight: 700;
+    background-color: rgb(153, 215, 61);
+    color: black;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: medium;
+}
+
+.writeButton:hover {
+    color: white;
+    background-color: green;
+
+}
+
+.postViewerHeader {
+    width: 100%;
+    display: flex;
+
+}
+
+.postTitleList {
+    width: 70%;
+}
+
+.writer {
+    width: 15%;
+}
+
+.dateList {
+    width: 10%;
+}
+
+.views {
+    width: 5%;
+}
+
+
+.postContentList {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.contentTitle {
+    margin-left: 10px;
+    width: 65%;
+    display: flex;
+    cursor: pointer;
+
+}
+
+.contentTitle:hover {
+    text-decoration: underline;
+}
+
+.postWriter {
+    width: 10%;
+    text-align: center;
+}
+
+.postDate {
+    width: 10%;
+    text-align: center;
+    padding-right: 17px;
+}
+
+.viewCount {
+    width: 10%;
+}
+
+.searchPost {
+    position: relative;
+    top: 5%;
+    display: flex;
+    height: 32px;
+    left: -28%;
+}
+
+
+
+.searchPostInput {
+    width: 16rem;
+    border: 1px solid lightgray;
+    text-indent: 10px;
+    border-radius: 3px;
+}
+
+.searchPostBtn {
+    width: 70px;
+    border-style: none;
+    margin-left: 1px;
+    margin-right: 5px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.searchPostBtn:hover {
+    color: white;
+    background-color: green;
+
+}
+
+.footerSection {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    top: 2%;
+    left: -3%;
+    align-items: center;
 }

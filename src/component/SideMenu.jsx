@@ -1,9 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./SideMenu.css";
-
+import SearchCharacter from "./SearchMyCharacter";
 const SideMenu = () => {
-
   const onClickMenu = (e) => {
     console.log("click sideMenu");
   };
@@ -11,10 +10,12 @@ const SideMenu = () => {
   const navigate = useNavigate();
   return (
     <>
-      <button type="button" className="moveToLostark">
-        <a href="https://lostark.game.onstove.com/Main" target="_blank"></a>
-      </button>
       <div className="sideMenu">
+        <SearchCharacter />
+        <button type="button" className="moveToLostark">
+          <a href="https://lostark.game.onstove.com/Main" target="_blank"></a>
+        </button>
+
         {/* <h3 className="menuHeader">오늘의 일정</h3> */}
         <ul className="menuList">
           <li className="sideItem chattingBoard">

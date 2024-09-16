@@ -1,18 +1,14 @@
 .profileBox {
-    /*전체박스*/
-    /* border: 1px solid black; */
-    /* position: fixed; */
     width: 15rem;
-    height: 14rem;
-    background-color: rgb(232, 255, 210);
-
+    height: 170px;
 }
 
+/* 
 .Logo_Button {
     transform: translate(20%, 50%);
     margin: 5px;
     padding-top: 5px;
-}
+} */
 
 .infoBox {
     display: flex;
@@ -65,7 +61,7 @@
 
 .myPageBtn {
     width: 80%;
-    height: 15%;
+    height: 1.5rem;
     border-style: none;
     border-radius: 5px;
     background-color: rgb(67, 162, 80);
@@ -74,4 +70,16 @@
     cursor: pointer;
     margin: 10px;
     transform: translate(5%);
+}
+
+.logoutBtn {
+    border-style: none;
+    background-color: transparent;
+    font-weight: 800;
+    cursor: pointer;
+    
+}
+
+.profileButton {
+    display: flex;
 }
