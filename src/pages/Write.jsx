@@ -7,7 +7,7 @@ import debounce from "../utils/debounce";
 import ReactQuill from "react-quill-new";
 import "quill/dist/quill.snow.css";
 import { authService, dbService, fbStorage } from "../../firebase";
-import { collection, doc, addDoc, updateDoc } from "firebase/firestore";
+import { collection, doc, addDoc, updateDoc, setDoc } from "firebase/firestore";
 import { getStorage, ref } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -101,8 +101,6 @@ const Write = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log();
-
     if (!confirm("글을 등록하시겠습니까?")) {
       return;
     } else {
@@ -119,12 +117,19 @@ const Write = () => {
           dbService,
           inputData.category
         ).withConverter(postConverter);
-        await addDoc(collectionRef, post); //여기까지 작성한 문서+작성자 UID 업로드
+        const docRef = await addDoc(collectionRef, post); //여기까지 작성한 문서+작성자 UID 업로드
+        //문서추가후 DocumentReference 반환
+        const docId = docRef.id; // 생성된 문서의 ID 가져오기
+        //사용자 문서에서 postNumber 업데이트
         const userRef = doc(dbService, "User", user.uid);
         await updateDoc(userRef, { postNumber: user.postNumber + 1 });
-        //작성한 게시물 수 +1
-        const postDocRef = doc(postCollectionRef, doc.id);
-        await addDoc(postDocRef, doc.id);
+        //유저정보에 작성한 게시물 수 +1
+
+        //게시글 컬렉션에 생성된 문서의 ID를 추가한다.
+        // const postDocRef = doc(postCollectionRef, docId);
+        // await addDoc(postDocRef, { id: docId });
+        await setDoc(doc(userDocRef, "post", docId), { id: docId });
+
         console.log("Document successfully written!");
         alert("🌱 게시글이 정상적으로 등록되었습니다. 🌱 ");
         navigate(`/${inputData.category}`);
