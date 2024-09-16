@@ -1,20 +1,23 @@
-.main_Logo {
+.main_Logo,
+.Logo_Button {
     border-style: none;
     font-size: 150%;
     font-weight: 900;
     width: fit-content;
     margin: 5px;
     cursor: pointer;
+    display: flex;
+    transform: translate(0, 10px);
 }
 
-.Logo_Button {
-    border-style: none;
-    font-size: 150%;
-    font-weight: 900;
-    width: fit-content;
+
+
+.main_Logo,
+.Logo_Button:hover {
     cursor: pointer;
 }
 
-.main_Logo, Logo_Button:hover {
-    cursor: pointer;
+.logoImg {
+    width: 20px;
+    margin-right: 5px;
 }

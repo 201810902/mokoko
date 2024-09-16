@@ -1,4 +1,4 @@
-html,
+/* html,
 body,
 div,
 span,
@@ -88,7 +88,7 @@ video {
 }
 
 /* HTML5 display-role reset for older browsers */
-article,
+/* article,
 aside,
 details,
 figcaption,
@@ -128,5 +128,26 @@ q:after {
 table {
     border-collapse: collapse;
     border-spacing: 0;
+} */
+
+/* @font-face {
+    font-family: 'CustomFont';
+    src: url('./assets/fonts/MaruBuri-Regular.woff2') format('woff2'),
+        url('./assets/fonts/MaruBuri-Regular.ttf') format('truetype');
+    /* font-weight: 800; */
+/* font-style: normal; 
 }
 
+* {
+    font-family: 'CustomFont', sans-serif;
+} */
+
+button {
+    cursor: pointer;
+    border: none;
+
+}
+
+button:hover {
+    font-weight: 700;
+}
