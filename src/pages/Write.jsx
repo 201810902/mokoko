@@ -10,8 +10,9 @@ import { authService, dbService, fbStorage } from "../../firebase";
 import { collection, doc, addDoc, updateDoc, setDoc } from "firebase/firestore";
 import { getStorage, ref } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { updateProfile } from "firebase/auth";
+import { createPost, addPost } from "../redux/post.js";
 
 const Write = () => {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const Write = () => {
   const newpostNumb = user.postNumber;
   console.log("userId", userId);
   console.log("niciname:", userNickname);
+  const dispatch = useDispatch();
 
   const userDocRef = doc(dbService, "User", userId);
   const postCollectionRef = collection(userDocRef, "post");
@@ -55,7 +57,7 @@ const Write = () => {
         category: post.category,
         postTitle: post.postTitle,
         post: post.post,
-        date: post.date,
+        date: post.date, //저장된 ISO 문자열
         userId: userId,
       };
     },
@@ -65,7 +67,7 @@ const Write = () => {
         data.category,
         data.postTitle,
         data.post,
-        data.date,
+        new Date(data.date),
         data.userId
       );
     },
@@ -76,7 +78,7 @@ const Write = () => {
     postTitle: "",
     post: "",
     date: currentDate,
-    userId: "",
+    userId: user.uid,
   });
 
   const storage = getStorage();
@@ -95,9 +97,9 @@ const Write = () => {
     setInputData((prevData) => ({ ...prevData, post: value }));
   };
 
-  useEffect(() => {
-    console.log(inputData);
-  }, [inputData]);
+  // useEffect(() => {
+  //   console.log(inputData);
+  // }, [inputData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -105,13 +107,13 @@ const Write = () => {
       return;
     } else {
       try {
-        const post = new Post(
-          inputData.category,
-          inputData.postTitle,
-          inputData.post,
-          inputData.date,
-          inputData.userId
-        );
+        const post = {
+          category: inputData.category,
+          postTitle: inputData.postTitle,
+          post: inputData.post,
+          date: inputData.date,
+          userId: inputData.userId,
+        };
 
         const collectionRef = collection(
           dbService,
@@ -128,8 +130,11 @@ const Write = () => {
         //게시글 컬렉션에 생성된 문서의 ID를 추가한다.
         // const postDocRef = doc(postCollectionRef, docId);
         // await addDoc(postDocRef, { id: docId });
-        await setDoc(doc(userDocRef, "post", docId), { id: docId });
+        // await setDoc(doc(userDocRef, "post", docId), { id: docId });
 
+        await setDoc(doc(dbService, inputData.category, docId), { ...post });
+
+        dispatch(addPost(post)); //비동기 액션 디스패치
         console.log("Document successfully written!");
         alert("🌱 게시글이 정상적으로 등록되었습니다. 🌱 ");
         navigate(`/${inputData.category}`);
@@ -166,10 +171,10 @@ const Write = () => {
             <option value="none"> 게시판을 선택하세요</option>
             <option value="community">💬 자유게시판</option>
             <option value="Tactics">⚔️ 공략게시판</option>
-            <option value="질문게시판">❓ 궁금해요</option>
-            <option value="비틱게시판">😋 비틱게시판</option>
-            <option value="자모앨범">📸 자모앨범</option>
-            <option value="건의합니다">🙋🏻 건의합니다</option>
+            <option value="question">❓ 궁금해요</option>
+            <option value="bragging">😋 비틱게시판</option>
+            <option value="gallery">📸 자모앨범</option>
+            <option value="suggestion">🙋🏻 건의합니다</option>
           </select>
 
           <label htmlFor="write">

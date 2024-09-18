@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import banner1 from "../assets/banner1.svg";
 import Form from "../component/Form";
@@ -6,11 +6,21 @@ import SideMenu from "../component/SideMenu";
 import Logo from "../component/Logo";
 import Write from "../pages/Write";
 import Profile from "../component/Profile";
-import SearchMyCharacter from "../component/SearchMyCharacter";
 import "./Community.css";
-import selectMark from "../assets/downtriangle.png";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPosts } from "../redux/post.js";
 
 const Community = () => {
+  const dispatch = useDispatch();
+  const { posts, status, error } = useSelector((state) => state.post);
+  const category = "community";
+  const state = useSelector((state) => state);
+  // const posts = state.post.posts;
+  useEffect(() => {
+    dispatch(fetchPosts(category));
+  }, [dispatch, category]);
+  console.log("Post:", posts);
+
   const [isLatest, setisLatest] = useState(true);
   const [isOldest, setisOldest] = useState(false);
   const onClickSortLatest = (e) => {
@@ -22,15 +32,15 @@ const Community = () => {
     setisLatest(false);
   };
   const searchPost = () => {};
-  const postData = {
-    postNum: 1,
-    postTitle: "자라나는 모코코 게시판 만드는중",
-    date: "08-09",
-    userId: "양홍련",
-    view: 3,
-    likes: 4,
-    replyCount: 3,
-  };
+  // const postData = {
+  //   postNum: 1,
+  //   postTitle: "자라나는 모코코 게시판 만드는중",
+  //   date: "08-09",
+  //   userId: "양홍련",
+  //   view: 3,
+  //   likes: 4,
+  //   replyCount: 3,
+  // };
   //자유게시판
   const navigate = useNavigate();
   const onClickWrite = (e) => {
@@ -70,15 +80,25 @@ const Community = () => {
             <span className="dateList">작성일</span>
             <span className="viewCount">조회</span>
           </div>
-          <div className="postContentList">
-            <span className="contentTitle">
-              {postData.postTitle}
-              <span className="replyMark">[{postData.replyCount}]</span>
-            </span>
-            <span className="postWriter">{postData.userId}</span>
-            <span className="postDate">{postData.date}</span>
-            <span className="views">{postData.view}</span>
-          </div>
+          {posts.map((post) => (
+            <div className="postContentList" key={post.id}>
+              <span className="contentTitle">
+                {post.postTitle}
+                {post.replyCount > 0 && (
+                  <span className="replyMark">[{post.replyCount}]</span>
+                )}
+              </span>
+              <span className="postWriter">{post.userNickName}</span>
+              <span className="postDate">
+                {post.date && post.date.seconds
+                  ? new Date(post.date.seconds * 1000)
+                      .toLocaleDateString("ko-KR")
+                      .replace(/\.$/, "")
+                  : "Invalid Date"}
+              </span>
+              <span className="views">{post.view}</span>
+            </div>
+          ))}
         </div>
         <div className="footerSection">
           <form className="searchPost">
