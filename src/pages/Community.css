@@ -40,9 +40,9 @@
 .postListContainer {
     position: relative;
     width: 60%;
-    height: 70%;
+    height: fit-content;
     left: 27%;
-    bottom: 58%;
+    bottom: 60%;
     /* transform: translate(40%, -80%); */
     display: flex;
     flex-direction: column;
@@ -129,7 +129,9 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    margin-top: 10px;
+    align-items: center;
+    height: 35px;
+    border-bottom: 1px solid rgb(200, 199, 199)
 }
 
 .contentTitle {
@@ -153,6 +155,7 @@
     width: 10%;
     text-align: center;
     padding-right: 17px;
+
 }
 
 .viewCount {
