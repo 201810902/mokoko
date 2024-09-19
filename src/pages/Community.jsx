@@ -11,25 +11,29 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "../redux/post.js";
 
 const Community = () => {
+  const [isLatest, setisLatest] = useState(true);
+  const [isOldest, setisOldest] = useState(false);
+  const [sort, setSort] = useState("desc");
   const dispatch = useDispatch();
   const { posts, status, error } = useSelector((state) => state.post);
   const category = "community";
+
   const state = useSelector((state) => state);
   // const posts = state.post.posts;
   useEffect(() => {
-    dispatch(fetchPosts(category));
-  }, [dispatch, category]);
-  console.log("Post:", posts);
+    dispatch(fetchPosts({ category, sort }));
+  }, [dispatch, category, sort]);
+  // console.log("Post:", posts);
 
-  const [isLatest, setisLatest] = useState(true);
-  const [isOldest, setisOldest] = useState(false);
   const onClickSortLatest = (e) => {
     setisLatest(true);
     setisOldest(false);
+    setSort("desc");
   };
   const onClickSortOldest = (e) => {
     setisOldest(true);
     setisLatest(false);
+    setSort("asc");
   };
   const searchPost = () => {};
   // const postData = {

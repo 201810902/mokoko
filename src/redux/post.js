@@ -8,18 +8,15 @@ import {
   getDocs,
   query,
   where,
+  orderBy,
+  limit,
+  startAt,
+  endAt,
+  startAfter,
 } from "firebase/firestore";
 import { dbService } from "../../firebase";
 import { fetchUserNickName } from "../utils/userService";
-
-// const initialState = {
-//   docId: "",
-//   category: "",
-//   date: "",
-//   post: "",
-//   postTitle: "",
-//   userId: "",
-// };
+import Community from "../pages/Community";
 
 const initialState = {
   posts: [],
@@ -30,14 +27,17 @@ const initialState = {
 
 export const fetchPosts = createAsyncThunk(
   "posts/fetchPosts",
-  async (category) => {
+  async ({ category, sort }) => {
     if (!category) {
       throw new Error("Category is required");
     }
 
-    const collectionRef = collection(dbService, category);
-    const q = query(collectionRef, where("category", "==", category));
-    const querySnapshot = await getDocs(q);
+    const q = query(
+      collection(dbService, category),
+      orderBy("date", sort),
+      limit(15)
+    ); //페이지네이션 시작점
+    const querySnapshot = await getDocs(q); //처음부터 가져오기
 
     const postsWithNickNames = await Promise.all(
       querySnapshot.docs.map(async (doc) => {
