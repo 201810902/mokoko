@@ -9,17 +9,31 @@ import Profile from "../component/Profile";
 import "./Community.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "../redux/post.js";
+import { createSelector } from "@reduxjs/toolkit";
+// import { useParams } from "react-router-dom";
+//풀필요 리렌더링 경고: Memoized로 해결해보자..(메모이제이션이 최선인가?)
+const selectPosts = (state) => state.post.posts; //기본선택자
+//메모이제이션 선택자
+const selectPostsMemoized = createSelector([selectPosts], (posts) => posts);
 
 const Community = () => {
   const [isLatest, setisLatest] = useState(true);
   const [isOldest, setisOldest] = useState(false);
   const [sort, setSort] = useState("desc");
   const dispatch = useDispatch();
-  const { posts, status, error } = useSelector((state) => state.post);
+
+  //아 이거 한번에 합치고 싶은데 어케 합치지
+  const posts = useSelector(selectPosts);
+  const status = useSelector((state) => state.post.status);
+  const error = useSelector((state) => state.post.error);
+  // const { posts, status, error } = useSelector((state) => ({
+  //   posts: selectPostsMemoized(selectPosts),
+  //   status: state.post.status,
+  //   error: state.post.error,
+  // }));
+
   const category = "community";
 
-  const state = useSelector((state) => state);
-  // const posts = state.post.posts;
   useEffect(() => {
     dispatch(fetchPosts({ category, sort }));
   }, [dispatch, category, sort]);
@@ -34,6 +48,9 @@ const Community = () => {
     setisOldest(true);
     setisLatest(false);
     setSort("asc");
+  };
+  const onClickPost = (postId) => {
+    navigate(`/posts/${postId}`);
   };
   const searchPost = () => {};
   // const postData = {
@@ -86,7 +103,12 @@ const Community = () => {
           </div>
           {posts.map((post) => (
             <div className="postContentList" key={post.id}>
-              <span className="contentTitle">
+              <span
+                className="contentTitle"
+                onClick={() => {
+                  onClickPost(post.id);
+                }}
+              >
                 {post.postTitle}
                 {post.replyCount > 0 && (
                   <span className="replyMark">[{post.replyCount}]</span>
@@ -112,6 +134,7 @@ const Community = () => {
             ></input>
             <button className="searchPostBtn"> 검색 </button>
           </form>
+
           <button className="writeButton" type="button" onClick={onClickWrite}>
             ✎ 글쓰기
           </button>

@@ -1,0 +1,48 @@
+.postContainer {
+    position: relative;
+    width: 60%;
+    height: fit-content;
+    left: 27%;
+    bottom: 60%;
+    /* transform: translate(40%, -80%); */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* border: 1px solid black; */
+    padding: 20px;
+    background-color: rgb(255, 255, 255, 0.6)
+}
+
+.postViewer {
+    width: 70%;
+    height: 100%;
+    background-color: white;
+}
+
+.viewerTitle {
+    border: 1px solid black;
+    width: 50%;
+    height: 30px;
+}
+
+.contentViewer {
+    width: 70%;
+    height: 100%;
+    border: 2px solid black;
+}
+
+.contentAuthor {
+    font-weight: 800;
+}
+
+.commentSection {}
+
+.replysection {
+    border-style: none;
+    width: 40rem;
+    min-height: 2rem;
+    height: fit-content;
+    resize: none;
+    margin-top: 10px;
+    padding: 10px;
+}
