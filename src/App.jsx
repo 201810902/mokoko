@@ -13,6 +13,7 @@ import Tactics from "./pages/Tactics";
 import Suggestion from "./pages/Suggestion";
 import Bragging from "./pages/Bragging";
 import Write from "./pages/Write";
+import Viewer from "./pages/Viewer";
 import "./App.css";
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
         <Route path="/tactics" element={<Tactics />} />
         <Route path="/suggestion" element={<Suggestion />} />
         <Route path="/bragging" element={<Bragging />} />
+        <Route path="/posts/:id" element={<Viewer />} />
       </Routes>
     </>
   );

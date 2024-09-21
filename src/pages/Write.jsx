@@ -18,14 +18,10 @@ const Write = () => {
   const navigate = useNavigate();
   // const user = authService.currentUser;
   const user = useSelector((state) => state.user.value);
-  console.log(user);
   const userId = user.uid;
   const userNickname = user.nickName;
   const newpostNumb = user.postNumber;
-  console.log("userId", userId);
-  console.log("niciname:", userNickname);
   const dispatch = useDispatch();
-
   const userDocRef = doc(dbService, "User", userId);
   const postCollectionRef = collection(userDocRef, "post");
   const BackButtonListener = () => {
@@ -43,12 +39,13 @@ const Write = () => {
     // }, [third]);
   };
   class Post {
-    constructor(category, postTitle, post, date, userId) {
+    constructor(category, postTitle, post, date, userId, viewCount) {
       this.category = category;
       this.postTitle = postTitle;
       this.post = post; //포스트 내용
       this.date = date;
       this.userId = userId;
+      this.viewCount = viewCount;
     }
   }
   const postConverter = {
@@ -59,6 +56,8 @@ const Write = () => {
         post: post.post,
         date: post.date, //저장된 ISO 문자열
         userId: userId,
+        viewCount: post.viewCount,
+        replyNumber: post.replyNumber,
       };
     },
     fromFirestore: (snapshot, options) => {
@@ -68,7 +67,9 @@ const Write = () => {
         data.postTitle,
         data.post,
         new Date(data.date),
-        data.userId
+        data.userId,
+        data.viewCount,
+        data.replyNumber
       );
     },
   };
@@ -79,6 +80,8 @@ const Write = () => {
     post: "",
     date: currentDate,
     userId: user.uid,
+    viewCount: 0,
+    replyNumber: 0,
   });
 
   const storage = getStorage();
@@ -113,6 +116,8 @@ const Write = () => {
           post: inputData.post,
           date: inputData.date,
           userId: inputData.userId,
+          viewCount: inputData.viewCount,
+          replyNumber: inputData.replyNumber,
         };
 
         const collectionRef = collection(

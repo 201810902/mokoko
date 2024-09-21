@@ -1,4 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 import {
   collection,
   doc,
@@ -6,6 +8,7 @@ import {
   updateDoc,
   setDoc,
   getDocs,
+  getDoc,
   query,
   where,
   orderBy,
@@ -23,6 +26,11 @@ const initialState = {
   status: "idle",
   error: null,
   loading: false,
+};
+
+const persistConfig = {
+  key: "post",
+  storage,
 };
 
 export const fetchPosts = createAsyncThunk(
@@ -52,6 +60,27 @@ export const fetchPosts = createAsyncThunk(
       })
     );
     return postsWithNickNames;
+  }
+);
+
+//게시글 ID로 글 조회하기
+export const fetchPostById = createAsyncThunk(
+  "posts/fetchPostById",
+  async (id) => {
+    const docRef = doc(dbService, "community", id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      const postData = docSnap.data();
+      const userNickName = await fetchUserNickName(postData.userId);
+
+      return {
+        id: docSnap.id,
+        ...postData,
+        userNickName,
+      };
+    } else {
+      throw new Error("No Such document!");
+    }
   }
 );
 
@@ -122,9 +151,33 @@ const postSlice = createSlice({
       })
       .addCase(fetchPosts.rejected, (state, action) => {
         state.error = action.error.message;
+      })
+      .addCase(fetchPostById.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchPostById.fulfilled, (state, action) => {
+        state.loading = false;
+        const existingPostIndex = state.posts.findIndex(
+          (post) => post.id === action.payload.id
+        );
+        if (existingPostIndex >= 0) {
+          state.posts[existingPostIndex] = action.payload;
+        } else {
+          state.posts.push(action.payload);
+        }
+
+        state.posts = [action.payload];
+      })
+      .addCase(fetchPostById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });
 
-export default postSlice.reducer;
+//persistReducer 적용
+const persistedPostReducer = persistReducer(persistConfig, postSlice.reducer);
+
+// export default postSlice.reducer;
+export default persistedPostReducer; //persistReducer로 감싸서 export
 export const { addPost, updatePost, deletePost } = postSlice.actions;
