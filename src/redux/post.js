@@ -20,6 +20,7 @@ import {
 import { dbService } from "../../firebase";
 import { fetchUserNickName } from "../utils/userService";
 import Community from "../pages/Community";
+import { useSelector } from "react-redux";
 
 const initialState = {
   posts: [],
@@ -28,6 +29,55 @@ const initialState = {
   loading: false,
 };
 
+class Post {
+  constructor(
+    category,
+    postTitle,
+    post,
+    date,
+    userId,
+    viewCount,
+    likeCount,
+    replyNumber
+  ) {
+    this.category = category;
+    this.postTitle = postTitle;
+    this.post = post; //포스트 내용
+    this.date = date;
+    this.userId = userId;
+    this.viewCount = viewCount;
+    this.likeCount = likeCount;
+    this.replynumber = replyNumber;
+  }
+}
+const postConverter = {
+  toFirestore: (post) => {
+    return {
+      category: post.category,
+      postTitle: post.postTitle,
+      post: post.post,
+      date: post.date, //저장된 ISO 문자열
+      // userId: userId, -> 원래 write.jsx에서 분리해오면서 아래줄로 수정
+      userId: post.userId,
+      viewCount: post.viewCount,
+      replyNumber: post.replyNumber,
+      likeCount: post.likeCount,
+    };
+  },
+  fromFirestore: (snapshot, options) => {
+    const data = snapshot.data(options);
+    return new Post(
+      data.category,
+      data.postTitle,
+      data.post,
+      new Date(data.date),
+      data.userId,
+      data.viewCount,
+      data.replyNumber,
+      data.likeCount
+    );
+  },
+};
 const persistConfig = {
   key: "post",
   storage,
@@ -181,3 +231,6 @@ const persistedPostReducer = persistReducer(persistConfig, postSlice.reducer);
 // export default postSlice.reducer;
 export default persistedPostReducer; //persistReducer로 감싸서 export
 export const { addPost, updatePost, deletePost } = postSlice.actions;
+
+//Post 클래스와 postConverter export 추가
+export { Post, postConverter };

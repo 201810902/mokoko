@@ -10,7 +10,7 @@ import "./Community.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "../redux/post.js";
 import { createSelector } from "@reduxjs/toolkit";
-import dateConverter from "../utils/dateConverter.js";
+import { timeConverter, dateConverter } from "../utils/timeConverter.js";
 // import { useParams } from "react-router-dom";
 //풀필요 리렌더링 경고: Memoized로 해결해보자..(메모이제이션이 최선인가?)
 const selectPosts = (state) => state.post.posts; //기본선택자
@@ -54,15 +54,6 @@ const Community = () => {
     navigate(`/posts/${postId}`);
   };
   const searchPost = () => {};
-  // const postData = {
-  //   postNum: 1,
-  //   postTitle: "자라나는 모코코 게시판 만드는중",
-  //   date: "08-09",
-  //   userId: "양홍련",
-  //   view: 3,
-  //   likes: 4,
-  //   replyCount: 3,
-  // };
   //자유게시판
   const navigate = useNavigate();
   const onClickWrite = (e) => {
@@ -103,7 +94,10 @@ const Community = () => {
             <span className="viewCount">조회</span>
           </div>
           {posts.map((post) => (
-            <div className="postContentList" key={post.id}>
+            <div
+              className="postContentList"
+              key={post.id ? post.id : post.date.toString()}
+            >
               <span
                 className="contentTitle"
                 onClick={() => {
@@ -117,12 +111,7 @@ const Community = () => {
               </span>
               <span className="postWriter">{post.userNickName}</span>
               <span className="postDate">
-                {/* {post.date && post.date.seconds
-                  ? new Date(post.date.seconds * 1000)
-                      .toLocaleDateString("ko-KR")
-                      .replace(/\.$/, "")
-                  : "Invalid Date"} */}
-                {dateConverter(post.date.seconds)}
+                {timeConverter(post.date.seconds)}
               </span>
               <span className="views">{post.viewCount}</span>
             </div>

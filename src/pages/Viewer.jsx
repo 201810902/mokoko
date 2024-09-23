@@ -8,24 +8,23 @@ import Logo from "../component/Logo.jsx";
 import SideMenu from "../component/SideMenu.jsx";
 import { doc, updateDoc, increment } from "firebase/firestore";
 import { dbService } from "../../firebase.js";
-
+import { dateConverter } from "../utils/timeConverter.js";
+// import { collectionRef } from "../redux/reply.js";
 const Viewer = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { posts, status, error } = useSelector((state) => state.post);
   const post = posts.find((p) => p.id === id);
   const [isLike, setIsLike] = useState(false);
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [replyIpnut, setReplyInput] = useState({
+    postId: id,
+    // userId: user.uid,
+    replyDate: currentDate,
+    reply: "",
+    likeCount: 0,
+  });
   //좋아요 기능 함수
-  const postDate = new Date(post.date.seconds * 1000);
-  const today = new Date();
-
-  const isSameDay =
-    postDate.getFullYear() === today.getFullYear() &&
-    postDate.getMonth() === today.getMonth() &&
-    postDate.getDate() === today.getDate();
-
-  // console.log("게시글 작성 시각: ", `${hours}:${minutes}`);
-
   const onClickLike = async () => {
     setIsLike(!isLike);
     const incrementValue = isLike ? -1 : 1;
@@ -48,15 +47,24 @@ const Viewer = () => {
 
   if (status === "loading") {
     console.log("loading");
-
     return <div>Loading...</div>;
   }
   if (error) {
     console.Error(error);
-
     return <div>Error: {error}</div>;
   }
-
+  const onSubmitReply = async (e) => {
+    e.preventDefault();
+    // try {
+    //   const reply = {
+    //     postId: replyInput.postId,
+    //     userId: replyInput.userId,
+    //     replyDate: replyInput.replyDate,
+    //     reply: replyInput.reply,
+    //     likeCount: replyInput.likeCount,
+    //   };
+    // }
+  };
   return (
     <>
       <div className="profileContainer">
@@ -69,19 +77,11 @@ const Viewer = () => {
       <div className="postContainer">
         <div className="postViewer" key={post.id}>
           <span>
-            <h1>{post.category}</h1>
+            <h2>{post.category}</h2>
             <h2 className="viewerTitle">{post.postTitle} </h2>
             <p className="contentAuthor"> {post.userNickName}</p>
             <p className="contentDate">
-              {new Date(post.date.seconds * 1000).toLocaleDateString("ko-KR", {
-                year: "numeric",
-                month: "2-digit",
-                day: "2-digit",
-                hour: "2-digit",
-                minute: "2-digit",
-                hour12: false, // 12시간 형식이 아닌 24시간 형식으로 표시
-              })}{" "}
-              조회: {post.viewCount}
+              {dateConverter(post.date.seconds)} 조회 {post.viewCount}
             </p>
           </span>
           <div

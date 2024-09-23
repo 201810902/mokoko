@@ -17,6 +17,10 @@
     width: 70%;
     height: 100%;
     background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding-left: 30px;
+    gap: 10px;
 }
 
 .viewerTitle {
@@ -64,6 +68,7 @@
     background-image: url(/src/assets/full_heart.svg);
     background-repeat: no-repeat;
     background-size: cover;
+
 }
 
 .unliked {
@@ -72,4 +77,5 @@
     background-image: url(/src/assets/empty_heart.svg);
     background-repeat: no-repeat;
     background-size: cover;
+    background-color: transparent;
 }
