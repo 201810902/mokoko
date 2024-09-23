@@ -26,16 +26,20 @@
 }
 
 .contentViewer {
-    width: 70%;
-    height: 100%;
+    width: 35rem;
+    height: 25rem;
     border: 2px solid black;
+    padding: 10px;
 }
 
 .contentAuthor {
     font-weight: 800;
 }
 
-.commentSection {}
+.commentSection {
+    border: 1px solid lightgray;
+    border-radius: 5px;
+}
 
 .replysection {
     border-style: none;
@@ -43,6 +47,29 @@
     min-height: 2rem;
     height: fit-content;
     resize: none;
-    margin-top: 10px;
+    /* margin-top: 10px; */
     padding: 10px;
+}
+
+.likeButton {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 700;
+}
+
+.liked {
+    width: 30px;
+    height: 30px;
+    background-image: url(/src/assets/full_heart.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.unliked {
+    width: 30px;
+    height: 30px;
+    background-image: url(/src/assets/empty_heart.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }

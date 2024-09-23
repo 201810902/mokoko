@@ -39,13 +39,24 @@ const Write = () => {
     // }, [third]);
   };
   class Post {
-    constructor(category, postTitle, post, date, userId, viewCount) {
+    constructor(
+      category,
+      postTitle,
+      post,
+      date,
+      userId,
+      viewCount,
+      likeCount,
+      replyNumber
+    ) {
       this.category = category;
       this.postTitle = postTitle;
       this.post = post; //포스트 내용
       this.date = date;
       this.userId = userId;
       this.viewCount = viewCount;
+      this.likeCount = likeCount;
+      this.replynumber = replyNumber;
     }
   }
   const postConverter = {
@@ -58,6 +69,7 @@ const Write = () => {
         userId: userId,
         viewCount: post.viewCount,
         replyNumber: post.replyNumber,
+        likeCount: post.likeCount,
       };
     },
     fromFirestore: (snapshot, options) => {
@@ -69,7 +81,8 @@ const Write = () => {
         new Date(data.date),
         data.userId,
         data.viewCount,
-        data.replyNumber
+        data.replyNumber,
+        data.likeCount
       );
     },
   };
@@ -82,6 +95,7 @@ const Write = () => {
     userId: user.uid,
     viewCount: 0,
     replyNumber: 0,
+    likeCount: 0,
   });
 
   const storage = getStorage();
@@ -118,6 +132,7 @@ const Write = () => {
           userId: inputData.userId,
           viewCount: inputData.viewCount,
           replyNumber: inputData.replyNumber,
+          likeCount: inputData.likeCount,
         };
 
         const collectionRef = collection(

@@ -10,6 +10,7 @@ import "./Community.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "../redux/post.js";
 import { createSelector } from "@reduxjs/toolkit";
+import dateConverter from "../utils/dateConverter.js";
 // import { useParams } from "react-router-dom";
 //풀필요 리렌더링 경고: Memoized로 해결해보자..(메모이제이션이 최선인가?)
 const selectPosts = (state) => state.post.posts; //기본선택자
@@ -116,13 +117,14 @@ const Community = () => {
               </span>
               <span className="postWriter">{post.userNickName}</span>
               <span className="postDate">
-                {post.date && post.date.seconds
+                {/* {post.date && post.date.seconds
                   ? new Date(post.date.seconds * 1000)
                       .toLocaleDateString("ko-KR")
                       .replace(/\.$/, "")
-                  : "Invalid Date"}
+                  : "Invalid Date"} */}
+                {dateConverter(post.date.seconds)}
               </span>
-              <span className="views">{post.view}</span>
+              <span className="views">{post.viewCount}</span>
             </div>
           ))}
         </div>
