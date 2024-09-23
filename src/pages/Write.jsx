@@ -6,17 +6,16 @@ import { useState, useEffect } from "react";
 import debounce from "../utils/debounce";
 import ReactQuill from "react-quill-new";
 import "quill/dist/quill.snow.css";
-import { authService, dbService, fbStorage } from "../../firebase";
+import { authService, dbService } from "../../firebase";
 import { collection, doc, addDoc, updateDoc, setDoc } from "firebase/firestore";
 import { getStorage, ref } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { updateProfile } from "firebase/auth";
-import { createPost, addPost } from "../redux/post.js";
+import { createPost, addPost, Post, postConverter } from "../redux/post.js";
 
 const Write = () => {
   const navigate = useNavigate();
-  // const user = authService.currentUser;
   const user = useSelector((state) => state.user.value);
   const userId = user.uid;
   const userNickname = user.nickName;
@@ -37,54 +36,6 @@ const Write = () => {
     //     second;
     //   };
     // }, [third]);
-  };
-  class Post {
-    constructor(
-      category,
-      postTitle,
-      post,
-      date,
-      userId,
-      viewCount,
-      likeCount,
-      replyNumber
-    ) {
-      this.category = category;
-      this.postTitle = postTitle;
-      this.post = post; //포스트 내용
-      this.date = date;
-      this.userId = userId;
-      this.viewCount = viewCount;
-      this.likeCount = likeCount;
-      this.replynumber = replyNumber;
-    }
-  }
-  const postConverter = {
-    toFirestore: (post) => {
-      return {
-        category: post.category,
-        postTitle: post.postTitle,
-        post: post.post,
-        date: post.date, //저장된 ISO 문자열
-        userId: userId,
-        viewCount: post.viewCount,
-        replyNumber: post.replyNumber,
-        likeCount: post.likeCount,
-      };
-    },
-    fromFirestore: (snapshot, options) => {
-      const data = snapshot.data(options);
-      return new Post(
-        data.category,
-        data.postTitle,
-        data.post,
-        new Date(data.date),
-        data.userId,
-        data.viewCount,
-        data.replyNumber,
-        data.likeCount
-      );
-    },
   };
   const [currentDate, setCurrentDate] = useState(new Date());
   const [inputData, setInputData] = useState({
@@ -113,10 +64,6 @@ const Write = () => {
   const handleQuillChange = (value) => {
     setInputData((prevData) => ({ ...prevData, post: value }));
   };
-
-  // useEffect(() => {
-  //   console.log(inputData);
-  // }, [inputData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
