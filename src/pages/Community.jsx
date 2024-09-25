@@ -11,13 +11,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "../redux/post.js";
 import { createSelector } from "@reduxjs/toolkit";
 import { timeConverter, dateConverter } from "../utils/timeConverter.js";
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import CategoryMapper from "../utils/CategoryMapper.js";
 //풀필요 리렌더링 경고: Memoized로 해결해보자..(메모이제이션이 최선인가?)
 const selectPosts = (state) => state.post.posts; //기본선택자
 //메모이제이션 선택자
 const selectPostsMemoized = createSelector([selectPosts], (posts) => posts);
 
 const Community = () => {
+  // const { categoryName } = useParams();
+  // console.log("categoryName", categoryName);
+
   const [isLatest, setisLatest] = useState(true);
   const [isOldest, setisOldest] = useState(false);
   const [sort, setSort] = useState("desc");
@@ -33,7 +37,7 @@ const Community = () => {
   //   error: state.post.error,
   // }));
 
-  const category = "community";
+  const { category } = useParams();
 
   useEffect(() => {
     dispatch(fetchPosts({ category, sort }));
@@ -50,8 +54,18 @@ const Community = () => {
     setisLatest(false);
     setSort("asc");
   };
-  const onClickPost = (postId) => {
-    navigate(`/posts/${postId}`);
+  const onClickPost = (category, postId) => {
+    // console.log(
+    //   "category",
+    //   typeof category,
+    //   category,
+    //   "postId",
+    //   typeof postId,
+    //   postId
+    // );
+    // console.log(`/posts/${postId}?category=${category}`);
+
+    navigate(`/posts/${postId}?category=${category}`);
   };
   const searchPost = () => {};
   //자유게시판
@@ -69,7 +83,7 @@ const Community = () => {
         <SideMenu />
       </div>
       <div className="postListContainer">
-        <h2 className="boardName">자유게시판</h2>
+        <h2 className="boardName">{CategoryMapper(category)}</h2>
 
         <span className="sortButton">
           <button
@@ -87,7 +101,7 @@ const Community = () => {
           </button>
         </span>
         <div className="postList">
-          <div className="postViewerHeader">
+          <div className="postListHeader">
             <span className="postTitleList">제목</span>
             <span className="writer">작성자</span>
             <span className="dateList">작성일</span>
@@ -101,7 +115,7 @@ const Community = () => {
               <span
                 className="contentTitle"
                 onClick={() => {
-                  onClickPost(post.id);
+                  onClickPost(post.category, post.id); //category required문제 해결 시도중..
                 }}
               >
                 {post.postTitle}
