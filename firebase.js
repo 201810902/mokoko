@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+import { setLogLevel } from "firebase/app";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
@@ -19,3 +20,5 @@ export const authService = getAuth(firebaseApp);
 export const dbService = getFirestore(firebaseApp);
 export const fbStorage = getStorage(firebaseApp);
 export default firebaseApp;
+
+setLogLevel("error");

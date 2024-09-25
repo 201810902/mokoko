@@ -102,10 +102,17 @@
 
 }
 
-.postViewerHeader {
-    width: 100%;
-    display: flex;
 
+.postListHeader {
+    display: flex;
+    width: 100%;
+    height: 30px;
+    padding-top: 10px;
+    border-top: 1px solid black;
+    border-bottom: 0.3px solid black;
+    font-size: medium;
+    text-align: center;
+    justify-content: space-around;
 }
 
 .postTitleList {
@@ -131,11 +138,11 @@
     justify-content: space-between;
     align-items: center;
     height: 35px;
-    border-bottom: 1px solid rgb(200, 199, 199)
+    border-bottom: 1px solid rgb(200, 199, 199);
 }
 
 .contentTitle {
-    margin-left: 10px;
+    margin-left: 20px;
     width: 65%;
     display: flex;
     cursor: pointer;
@@ -195,10 +202,12 @@
 }
 
 .footerSection {
+    width: fit-content;
     position: relative;
     display: flex;
     justify-content: space-between;
-    top: 2%;
+    /* top: 2%; */
     left: -3%;
     align-items: center;
+    margin-top: 15px;
 }

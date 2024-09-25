@@ -22,13 +22,6 @@ import { fetchUserNickName } from "../utils/userService";
 import Community from "../pages/Community";
 import { useSelector } from "react-redux";
 
-const initialState = {
-  posts: [],
-  status: "idle",
-  error: null,
-  loading: false,
-};
-
 class Post {
   constructor(
     category,
@@ -116,12 +109,15 @@ export const fetchPosts = createAsyncThunk(
 //게시글 ID로 글 조회하기
 export const fetchPostById = createAsyncThunk(
   "posts/fetchPostById",
-  async (id) => {
-    const docRef = doc(dbService, "community", id);
+  async ({ category, id }) => {
+    const docRef = doc(dbService, category, id);
     const docSnap = await getDoc(docRef);
+    console.log("fetchPostById", docSnap, "docRef = ", docRef);
+
     if (docSnap.exists()) {
       const postData = docSnap.data();
       const userNickName = await fetchUserNickName(postData.userId);
+      console.log("fetchPostById");
 
       return {
         id: docSnap.id,
@@ -162,7 +158,12 @@ export const createPost = createAsyncThunk(
 
 const postSlice = createSlice({
   name: "post",
-  initialState,
+  initialState: {
+    posts: [],
+    status: "idle",
+    error: null,
+    loading: false,
+  },
   reducers: {
     addPost: (state, action) => {
       state.posts.push(action.payload);
@@ -201,25 +202,27 @@ const postSlice = createSlice({
       })
       .addCase(fetchPosts.rejected, (state, action) => {
         state.error = action.error.message;
+        state.error = action.error.message || "Unknown error occurred";
       })
       .addCase(fetchPostById.pending, (state) => {
-        state.loading = true;
+        state.loading = true; //요청 시작
       })
       .addCase(fetchPostById.fulfilled, (state, action) => {
-        state.loading = false;
+        state.loading = false; //요청 성공
         const existingPostIndex = state.posts.findIndex(
           (post) => post.id === action.payload.id
         );
+        console.log("payloadId", action.payload.id);
         if (existingPostIndex >= 0) {
-          state.posts[existingPostIndex] = action.payload;
+          Object.assign(state.posts[existingPostIndex], action.payload);
         } else {
           state.posts.push(action.payload);
         }
 
-        state.posts = [action.payload];
+        // state.posts = [action.payload];
       })
       .addCase(fetchPostById.rejected, (state, action) => {
-        state.loading = false;
+        state.loading = false; //요청 실패
         state.error = action.error.message;
       });
   },

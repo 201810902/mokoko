@@ -1,13 +1,17 @@
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
-  createSlice,
-  createAsyncThunk,
-  isRejectedWithValue,
-} from "@reduxjs/toolkit";
-import { collection, doc, addDoc, updateDoc, setDoc } from "firebase/firestore";
-import { getStorage, ref } from "firebase/storage";
+  collection,
+  doc,
+  addDoc,
+  updateDoc,
+  setDoc,
+  getDoc,
+  arrayUnion,
+} from "firebase/firestore";
 import { dbService } from "../../firebase";
-import { useSelector, useDispatch } from "react-redux";
+import { fetchUserNickName } from "../utils/userService";
 
+//Reply 클래스 정의
 class Reply {
   constructor(postId, userId, date, reply, likeCount) {
     this.postId = postId;
@@ -52,35 +56,79 @@ const initialState = {
 //댓글 생성 Thunk
 export const createReply = createAsyncThunk(
   "replies/createReply",
-  async (reply, { rejectedWithValue }) => {
+  async (reply, { rejectWithValue }) => {
     try {
       const collectionRef = collection(
         dbService,
-        "posts",
-        reply.postId,
-        "replies"
+        "community",
+        reply.postId, //post문서
+        "replies" //replies 컬렉션
       ).withConverter(replyConverter);
+
+      //Firestore에 댓글 등록(추가)
       const docRef = await addDoc(collectionRef, reply);
       const replyId = docRef.id;
 
-      const userRef = doc(dbService, "User", reply.userId);
-      await updateDoc(userRef);
-
-      //새 댓글(문서) 업데이트
-      await setDoc(doc(dbService, "posts", reply.postId, "replies", replyId), {
-        id: replyId,
+      //댓글 ID post DB에 추가
+      await setDoc(
+        doc(dbService, "community", reply.postId, "replies", replyId),
+        {
+          ...reply,
+          id: replyId,
+        }
+      );
+      //유저정보 업데이트(예시)
+      const userRef = doc(dbService, "User", reply.userId, "replies");
+      await updateDoc(userRef, {
+        replyIds: arrayUnion(replyId),
       });
       return { ...reply, id: replyId };
     } catch (error) {
-      return isRejectedWithValue(error.message);
+      return rejectWithValue(error.message);
+    }
+  }
+);
+//댓글 가져와서 렌더링하기
+export const fetchReply = createAsyncThunk(
+  "replis/fetchReply",
+  async ({ postId }) => {
+    const docRef = doc(dbService, "community", postId, "replies");
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      const replyData = docSnap.data();
+      const userNickName = await fetchUserNickName(replyData.userId);
+      return {
+        id: docSnap.id,
+        ...replyData,
+        userNickName,
+      };
+    } else {
+      throw new Error("no Such Reply");
     }
   }
 );
 
+//내 userId로 내가 쓴 댓글 모두 조회하기
+//sd;fjas;ldkfjas;gkrltlfgdjtlqkf
+
 const replySlice = createSlice({
   name: "replies",
   initialState,
-  reducers: {},
+  reducers: {
+    addReply: (state, action) => {
+      state.replies.push(action.payload);
+    },
+    updateReply: (state, action) => {
+      const { id, ...updates } = action.payload;
+      const existingReply = state.replies.find((reply) => reply.id === id);
+      if (existingReply) {
+        Object.assign(existingReply, updates);
+      }
+    },
+    deleteReply: (state, action) => {
+      state.reply = state.replies.filter((reply) => reply.id !== action.reply);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(createReply.pending, (state) => {
@@ -97,4 +145,8 @@ const replySlice = createSlice({
       });
   },
 });
+
 export default replySlice.reducer;
+export const { addReply, updateReply, deleteReply } = replySlice.actions;
+
+export { Reply, replyConverter };
